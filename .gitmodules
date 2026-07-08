@@ -1,0 +1,3 @@
+[submodule "libember_plus"]
+	path = libember_plus
+	url = https://github.com/Lawo/ember-plus.git

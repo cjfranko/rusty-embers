@@ -1,0 +1,30 @@
+[package]
+name = "rusty-embers"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "A general-purpose Rust crate for the Lawo Ember+ control protocol"
+repository = "https://github.com/chrisfranklandwright/rusty-embers"
+keywords = ["ember", "ember-plus", "broadcast", "control", "protocol"]
+categories = ["network-programming", "api-bindings"]
+
+[dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "net", "sync", "time", "macros", "io-util"] }
+thiserror = "1"
+tracing = "0.1"
+bytes = "1"
+libc = "0.2"
+
+[build-dependencies]
+bindgen = "0.69"
+cc = "1"
+pkg-config = "0.3"
+
+[dev-dependencies]
+tokio-test = "0.4"
+tracing-subscriber = "0.3"
+hex-literal = "0.4"
+
+[[example]]
+name = "minimal_provider"
+path = "examples/minimal_provider.rs"
