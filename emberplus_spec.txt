@@ -1,0 +1,4010 @@
+Number of pages: 94
+
+--- Page 0 ---
+Ember+ protocol specification        Lawo GmbH 
+1 
+ 
+ 
+ 
+ 
+ 
+ 
+Ember+ Specification 
+ 
+  
+--- Page 1 ---
+Ember+ protocol specification        Lawo GmbH 
+2 
+Version: 2.50 
+Revision: 15 
+Date:  2017-11-09 
+Authors: Marius Keuck, Philip Boger 
+ 
+Document History 
+ 
+2.50 – 11/2017 
+▪ Added a byte indicating the number of payload-length bytes for the alternative S101 
+framing. 
+▪ Added a sample showing how to detect a null value. 
+ 
+2.50 – 11/2017 
+▪ Added a description of the alternative S101 framing. 
+▪ Added a description of the new null value that can be used for parameters. 
+▪ Provided some more examples about how to use the libraries. 
+ 
+2.40 – 03/2017 
+▪ Added the missing dirFieldMask entries “Sparse” and “Tree”. 
+ 
+2.40 – 10/2016 
+▪ Added a hint that formula and factor are mutually exclusive. 
+▪ Added a more detailed description for the streamIdentifier and the streamDescriptor. 
+ 
+2.40 – 10/2016 
+▪ Updated the content table. 
+ 
+2.40 – 05/2016 
+▪ Changed the reference to the ASN.1 encoding rules documentation. 
+ 
+2.40 – 05/2016 
+▪ Added the “Number” field to the Template type. 
+ 
+2.40 – 04/2016 
+▪ Added chapter about the Template extensions (Ember+ 1.4, Glow 2.40). 
+ 
+2.31 – 02/2016 
+▪ Added a more detailed description about the online state of a node and the expected 
+behaviour of a provider and consumer. 
+ 
+2.31 – 03/2015 
+▪ Added a more detailed comment about the format string. 
+ 
+2.31 – 02/2015 
+▪ Corrected an incorrect wording on page 59. 
+ 
+2.31 – 04/2014 
+▪ Added support for multiple schema identifiers. 
+--- Page 2 ---
+Ember+ protocol specification        Lawo GmbH 
+3 
+ 
+2.30 – 01/2014 
+▪ Added chapter about the schema extension and a section about node removal. 
+ 
+2.20 – Revision 4 – 11/2013 
+▪ Added more detailed information about reporting a node without children. 
+ 
+2.20 – Revision 3 – 10/2013 
+▪ Corrected information on function content 
+ 
+2.20 – Revision 2 – 10/2013 
+▪ Corrected information on node and parameter numbering 
+ 
+2.20 – Revision 1 – 05/2013 
+▪ Reviewed information on very simple providers and the GetDirectory command. 
+ 
+2.20 – 05/2013 
+▪ Added Chapter about Function Extensions (Ember+ 1.2, Glow 2.20) 
+ 
+2.10 – Revision 1 – 10/2012 
+▪ Added a small section about the three layers of Ember+ to the Introduction. 
+ 
+2.10 – 10/2012 
+▪ Added Chapter about Matrix Extensions (Ember+ 1.1, Glow 2.10) 
+ 
+2.5 – Revision 5 – 10/2012 
+▪ Added more details to chapter “Message Length” (pg. 41) 
+ 
+2.5 – Revision 4 – 09/2012 
+▪ Updated some code examples which still used the insertElement method instead of 
+insert. 
+ 
+2.5 – Revision 3 – 08/2012 
+▪ Added the naming rules for the node and parameter identifier string (see The identifier 
+property). 
+▪ Added the information that replying to a Keep-Alive request is mandatory (see Keep-
+Alive mechanism). 
+▪ Added the “isOnline” property to the Node 
+ 
+2.5 – Revision 2 – 08/2012 
+▪ Added a document revision number. 
+▪ Added a more detailed description for the Subscribe and Unsubscribe commands. 
+ 
+07/2012 
+▪ Added a note about the formula format. More details can be found in the document 
+“Ember+ formulas”. 
+▪ Described a rule to detect empty nodes. 
+ 
+06/2012 
+--- Page 3 ---
+Ember+ protocol specification        Lawo GmbH 
+4 
+▪ Updated the Glow DTD version to 2.5, which introduces a more flexible way to transport 
+streams. Besides, the types QualifiedNode and QualifiedParameter have been added, 
+which offer a more compact method to transmit property changes. 
+ 
+05/2012 
+▪ Changed the numbers of the Subscribe and Unsubscribe command. 
+▪ Updated the Glow DTD version to 2.4. 
+ 
+04/2012 
+▪ The tags of nodes and parameters are now context specific. 
+▪ A node can now be marked as root. 
+▪ Added the EnumMap property and the description of the EnumCollection and 
+StringIntegerPair types. 
+ 
+02/2012 
+▪ Removed the tag information in the command list since a command is only represented 
+by its number. 
+ 
+02/2012 
+▪ Initial draft. 
+  
+--- Page 4 ---
+Ember+ protocol specification        Lawo GmbH 
+5 
+Content 
+Introduction ................................ ................................ ................................ ................................  9 
+EmBER ................................ ................................ ................................ ................................ .....11 
+Introduction ................................ ................................ ................................ ...........................11 
+About BER ................................ ................................ ................................ .........................11 
+Objectives ................................ ................................ ................................ ..........................11 
+Conformance ................................ ................................ ................................ .....................11 
+References ................................ ................................ ................................ ........................12 
+Basics................................ ................................ ................................ ................................ ....12 
+Overview ................................ ................................ ................................ ............................12 
+Tagging [X.690 8.14] ................................ ................................ ................................ ..........12 
+Length forms [X.690 8.1.3] ................................ ................................ ................................ .12 
+Container Usage ................................ ................................ ................................ ................12 
+Basic document structure ................................ ................................ ................................ ...13 
+Types ................................ ................................ ................................ ................................ ....13 
+Overview ................................ ................................ ................................ ............................13 
+Boolean [X.690 8.2] ................................ ................................ ................................ ...........13 
+Integer [X.690 8.3] ................................ ................................ ................................ .............13 
+Real [X.690 8.5] ................................ ................................ ................................ .................14 
+UTF8String [X.690 8.21] ................................ ................................ ................................ ....14 
+Octet String [X.690 8.7] ................................ ................................ ................................ ......14 
+Null [X.690 8.8] ................................ ................................ ................................ ..................14 
+Relative Object Identifier [X.690 8.20] ................................ ................................ ................14 
+Set [X.690 8.11] ................................ ................................ ................................ .................14 
+Sequence [X.690 8.9, X.690 8.10] ................................ ................................ .....................14 
+Implementation recommendations ................................ ................................ .........................15 
+Encoder ................................ ................................ ................................ .............................15 
+Decoder ................................ ................................ ................................ .............................15 
+Glow specification ................................ ................................ ................................ .....................16 
+Introduction ................................ ................................ ................................ ...........................16 
+Data types and properties................................ ................................ ................................ ......16 
+The tag format ................................ ................................ ................................ ...................16 
+Application defined tags ................................ ................................ ................................ .....17 
+--- Page 5 ---
+Ember+ protocol specification        Lawo GmbH 
+6 
+Application defined types ................................ ................................ ................................ ...18 
+Glow specific properties ................................ ................................ ................................ .....23 
+Application defined commands ................................ ................................ ..........................31 
+Ember+ 1.1: Matrix Extensions ................................ ................................ .............................. 33 
+Introduction ................................ ................................ ................................ ........................33 
+Type Definitions ................................ ................................ ................................ .................33 
+Use Cases ................................ ................................ ................................ .........................41 
+Performance Characteristics ................................ ................................ .............................. 46 
+Ember+ 1.2: Function Extensions ................................ ................................ ..........................47 
+Introduction ................................ ................................ ................................ ........................47 
+Type Definitions ................................ ................................ ................................ .................47 
+Use Cases ................................ ................................ ................................ .........................49 
+Ember+ 1.3: Schema Extensions ................................ ................................ ..........................51 
+Purpose ................................ ................................ ................................ .............................51 
+Identification within an Ember+ Tree ................................ ................................ ..................51 
+Scope ................................ ................................ ................................ ................................ 51 
+Schema definition ................................ ................................ ................................ ..............51 
+Application Notes ................................ ................................ ................................ ...............52 
+Syntax of Schema Identifiers................................ ................................ .............................. 52 
+References ................................ ................................ ................................ ........................53 
+Ember+ 1.4: Templates ................................ ................................ ................................ .........54 
+Purpose ................................ ................................ ................................ .............................54 
+Specification within an Ember+ tree ................................ ................................ ...................54 
+Restrictions, semantics and precedence ................................ ................................ ............55 
+GetDirectory requests ................................ ................................ ................................ ........56 
+Compatibility and migration ................................ ................................ ................................ 56 
+Changes to the Ember+ DTD ................................ ................................ .............................57 
+Ember+ usage ................................ ................................ ................................ ..........................59 
+Representing a device ................................ ................................ ................................ .......59 
+Querying a data provider ................................ ................................ ................................ ....60 
+The EmBER library ................................ ................................ ................................ ...................64 
+Compiling the library ................................ ................................ ................................ ..............64 
+Including the library ................................ ................................ ................................ ...............64 
+--- Page 6 ---
+Ember+ protocol specification        Lawo GmbH 
+7 
+Library structure ................................ ................................ ................................ ....................64 
+The util namespace ................................ ................................ ................................ ............65 
+The BER namespace ................................ ................................ ................................ .........65 
+The Dom namespace ................................ ................................ ................................ .........66 
+The Glow namespace ................................ ................................ ................................ ........66 
+Using the glow classes ................................ ................................ ................................ ..........67 
+Creating a GetDirectory request ................................ ................................ .........................67 
+Replying to a GetDirectory request ................................ ................................ ....................67 
+Changing a parameter value ................................ ................................ .............................. 68 
+Reporting a parameter value change ................................ ................................ .................68 
+Reporting a nullable parameter ................................ ................................ ..........................69 
+Reporting a template ................................ ................................ ................................ ..........69 
+Traversing a tree ................................ ................................ ................................ ................71 
+Behaviour rules and other guidelines ................................ ................................ ........................73 
+General behaviour rules ................................ ................................ ................................ ........73 
+Message length................................ ................................ ................................ ..................73 
+The identifier property ................................ ................................ ................................ ........73 
+The description property ................................ ................................ ................................ ....73 
+The number property ................................ ................................ ................................ .........74 
+When to use the element number or identifier ................................ ................................ ....74 
+Keep-Alive mechanism ................................ ................................ ................................ ......74 
+Number of consumers per provider ................................ ................................ ....................74 
+Notifications ................................ ................................ ................................ .......................74 
+Parameter value range changes ................................ ................................ ........................75 
+Value change requests ................................ ................................ ................................ ......75 
+Remarks on the Behaviour of Embedded Devices ................................ .............................75 
+Removing Sub-Trees at Runtime ................................ ................................ .......................75 
+General recommendations ................................ ................................ ................................ ....75 
+Separate parameters into logical categories ................................ ................................ ......75 
+Avoid indexed parameters ................................ ................................ ................................ .76 
+Offline trees ................................ ................................ ................................ .......................76 
+Frequently asked questions ................................ ................................ ................................ ......77 
+Why are the node and parameter numbers session based? ................................ ..............77 
+--- Page 7 ---
+Ember+ protocol specification        Lawo GmbH 
+8 
+Message Framing ................................ ................................ ................................ .....................78 
+The S101 protocol ................................ ................................ ................................ .................78 
+Variant 1: Escaping ................................ ................................ ................................ ............78 
+Variant 2: Non-Escaping ................................ ................................ ................................ ....79 
+Determining the supported framing ................................ ................................ ....................80 
+S101 Messages ................................ ................................ ................................ .....................81 
+Message types ................................ ................................ ................................ ...................81 
+Commands ................................ ................................ ................................ ........................81 
+Messages ................................ ................................ ................................ ..........................81 
+Glow DTD ASN.1 Notation ................................ ................................ ................................ ........83 
+Appendix ................................ ................................ ................................ ................................ ...94 
+S101 CRC Table ................................ ................................ ................................ ...................94 
+ 
+  
+--- Page 8 ---
+Ember+ protocol specification        Lawo GmbH 
+9 
+Introduction 
+The Ember+ protocol has been designed to allow the communication between two endpoints, 
+one being the data provider and the other one being the consumer. The data provider usually is 
+a piece of hardware which offers a set of controllable parameters, while the consumer may be a 
+control- or monitoring-system which provides access to these parameters and allows controlling 
+them. This document describes the Ember+ protocol specification and the encoding it uses. 
+Furthermore, it provides some implementation hints and gives several code examples that 
+demonstrate the use of this protocol. 
+ 
+The Ember+ standard defines three separate data representation technologies, which when 
+used in conjunction produce a data layout that conforms to the rules defined in this document: 
+▪ Glow is the name of the data schema that defines the data types used to convey 
+Ember+ information. 
+▪ EmBER is the name of the encoding used to store instances of the types defined by 
+Glow. 
+▪ S101 is the framing protocol used to transmit EmBER encoded data, ensuring message 
+integrity. 
+ 
+When comparing the transmission of a well-formed Ember+ message to the transmission of a 
+standard webpage, the following layers of data representation are equivalent: 
+▪ Glow and XHTML 
+▪ EmBER and XML 
+▪ S101 and HTTP 
+  
+Ember+ 
+Glow 
+S101 
+EmBER 
+Data Schema 
+Transport Layer 
+Ember+ Layers 
+--- Page 9 ---
+Ember+ protocol specification        Lawo GmbH 
+10 
+ 
+The chapter “EmBER” describes the basics of the Embedded Basic Encoding Rules (EmBER), 
+which is the encoding used by this protocol. The code samples listed in this document refer to 
+the EmBER library implementation written in C++. The library is freely available and usually 
+published together with this document. It implements the subset of BER which is required for 
+this protocol. BER is a well-known encoding standard. It is platform independent, generates 
+small data packets and offers an XML-like flexibility. It provides encoding rules for all common 
+data types, like integers, decimal numbers, strings, byte arrays and more. Additionally, it 
+provides container types called set and sequence. EmBER uses a TLV (Type, Length and 
+Value) system to specify what kind of data is currently present in the encoded data buffer. This 
+allows extending the protocol by user defined data types, like XML where a node may have any 
+name but also indicates what kind of attributes or data it contains. 
+ 
+The chapter “Ember+ specification” provides detailed information about the types, properties 
+and commands being used. The Ember+ specification relies on BER and defines a set of 
+objects in ASN.1 notation, which are also listed and described in this document.  
+One of the important points Ember+ put a focus on is to keep communication between the peers 
+as generic as possible. That means that the consumer doesn’t have to have any kind of detailed 
+knowledge of the device it is connected to. Instead, the device is responsible of providing its 
+structure when the consumer requests it. This allows a consumer to control any kind of device 
+as long as they follow the specification.  
+ 
+Chapter number three, called “Ember+ Usage” describes how a provider represents its data, 
+how a consumer queries the structure and how it can change a parameter value.  
+ 
+In “EmBER Library” the different layers of the C++ library implementation are described. 
+Additionally, the section shows how the library can be used to encode or decode data. 
+ 
+The chapter “Message Framing” describes the framing protocol which is used to transport 
+encoded Ember+ packets, called S101. The library also contains a basic encoder and decoder 
+framework that can be used to read and write S101 messages. 
+ 
+“Behaviour rules and guidelines” lists how a consumer and a provider must behave in several 
+situations. Besides, this chapter contains some general guidelines about how a tree should look 
+like.  
+ 
+The Ember+ object definition is called “Glow”; the specification is listed in the chapter “Glow 
+DTD ASN.1 Notation”. 
+ 
+The library and the framework referred to by this document provide everything needed in order 
+to easily implement the Ember+ protocol. It makes it unnecessary to have detailed knowledge 
+about the encoding and decoding algorithms.  
+Additionally, to the C++ library mentioned and used in this document, there are also 
+implementations written in standard C (called libember_slim) and a .NET version. 
+ 
+--- Page 10 ---
+Ember+ protocol specification        Lawo GmbH 
+11 
+EmBER 
+Introduction 
+This chapter describes the data types supported in this library and the restrictions. 
+ 
+About BER 
+BER stands for Basic Encoding Rules. The rules describe how data is being encoded and 
+decoded. The encoding algorithms are fast and produce small data packets, which is a good 
+reason to use this encoding on embedded systems. Each data entity is encoded by a tag, the 
+data length and the value itself, in short terms TLV. The tag simply defines the type, while the 
+length field contains the length of the encoded value in bytes. Both, the tag and the length are 
+encoded as well, which reduces the size of the resulting data packet even more. The structure 
+of a tag is described in the second chapter. 
+ 
+Objectives 
+EmBER has been developed in order to provide a way to encode data for transfer between 
+different electronic devices with varying hardware resources, independent from the transmission 
+medium and protocol. Ember can also be used to serialize data to non-volatile memory (e.g. a 
+file on a hard disk). 
+Ember has been designed to provide the following assets: 
+1. Conformance to a well-known and widely adopted standard 
+2. Compact size of the encoded data to minimize transmission load 
+3. Platform independence 
+4. XML-like flexibility 
+5. Binary storage of values for fast encoding and decoding 
+ 
+Conformance 
+Ember forms a subset of the Basic Encoding Rules (BER), an ITU and ISO standard developed 
+by the ASN.1 consortium (ASN.1: ITU-T X.680, ISO/IEC 8824-1; BER: ITU-T X.690, ISO/IEC 
+8825-1). 
+ASN.1 and BER are used by widely adopted technologies and standards like: 
+▪ LDAP, Active Directory 
+▪ PKCS (Public Key Cryptography Standard) 
+▪ X.400 Electronic Mail 
+▪ Voice Over IP 
+▪ SNMP 
+▪ UMTS. 
+It is recommended to read the documents listed in the section “References” in order to be able 
+to fully comprehend this documentation. 
+--- Page 11 ---
+Ember+ protocol specification        Lawo GmbH 
+12 
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", 
+"SHOULD NOT", "RECOMMENDED", "MAY" and "OPTIONAL" in this document are to be 
+interpreted as described in [RFC2119]. 
+References 
+This document refers to the following specifications: 
+▪ BER (ITU-T X.690 08/2015) https://www.itu.int/rec/T-REC-X.690-201508-I/en 
+▪ ASN.1 (ITU-T X.680 07/2002) http://www.itu.int/ITU-
+T/studygroups/com17/languages/X.680-0207.pdf 
+ 
+Additional resources: 
+▪ Brief introduction to ASN.1 and BER from the Microsoft Knowledge Base 
+http://support.microsoft.com/kb/252648 
+▪ “ASN.1 Complete”, a very comprehensive and freely downloadable book covering ASN.1 
+and BER by Professor John Larmouth http://www.oss.com/asn1/larmouth.html 
+ 
+Basics 
+Overview 
+Ember encoded data must be decodable by any fully featured BER decoder. An Ember decoder 
+on the other hand is not required to support the entire BER standard, since it is only required to 
+implement the BER subset defined in this document. Therefore, an Ember encoder shall apply 
+all the restrictions to the BER encoding defined in this document. 
+The Paragraph “Length Forms” and following define the most important parameters for the BER 
+encoding that turn Ember into a mere subset of BER.  
+Tagging [X.690 8.14] 
+An encoded value always contains two tags, the outer or application tag, which defines the 
+meaning or semantics of the data, and the inner tag which indicates the type of the encoded 
+object. For types with primitive encoding (Boolean, Integer, Octet String, Real, UTF8String, 
+Relative Object Identifier), the tagging environment shall be explicit without any exceptions. For 
+types with constructed encoding (Sequence and Set), implicit tagging is often used for the inner 
+tag. Besides the tag, the length of the encoded data is stored. So every object being encoded 
+contains an outer Tag, an outer Length, an inner Tag, an inner Length and a Value, in short 
+TLTLV. An encoding example can be found in the chapter “The EmBER library”. 
+ 
+Length forms [X.690 8.1.3] 
+1. Generally, both length forms (definite and indefinite) are allowed; usage of the indefinite 
+form though shall be permitted for containers only [X.690 8.1.3.2]. 
+2. The length forms used by the inner and outer tag generated through explicit tagging 
+must be identical. So if the outer tag specifies an indefinite length, the inner tag also has 
+to specify an indefinite length. 
+Container Usage  
+--- Page 12 ---
+Ember+ protocol specification        Lawo GmbH 
+13 
+The only containers that may be used are “Set” [X.690 8.11] and “Sequence” [X.690 8.10]. 
+ 
+Basic document structure 
+The document must start with a container, and there shall only be one container at the top-level 
+(like in the XML standard). 
+ 
+ 
+Types 
+ 
+Overview 
+The following BER types are supported by Ember: 
+1. Boolean 
+2. Integer 
+3. Real 
+4. UTF8String 
+5. Octet String 
+6. Null 
+7. Set 
+8. Sequence 
+9. Relative Object Identifier 
+ 
+Boolean [X.690 8.2] 
+The decoder shall interpret 0 (zero) as “false” and any non-zero number as “true”. It is 
+recommended for the encoder to use FF16 to encode “true”. 
+ 
+Integer [X.690 8.3] 
+Integers shall have a maximum size of 64 bits; the decoder may choose the data type to hold 
+the decoded integer depending on the actual length. (E.g. 32-bit integer if the unsigned value is 
+< 232, 64 bit otherwise). 
+Special care must be taken by the encoder to comply to rule [X.690 8.3.2]: the first 9 bits of the 
+encoded integer value must not be the same. 
+To verify the correctness of the implementation, the following table should be used: 
+ 
+ 
+Input Value Encoded result  
+Integers (base 10) Length octets Value octets (base 16) 
+ 1 01 01 
+ -1 01 FF 
+--- Page 13 ---
+Ember+ protocol specification        Lawo GmbH 
+14 
+ 255 02 00 FF 
+ 127 01 7F 
+ 128 02 00 80 
+ -128 01 80 
+ 216 -1 03 00 FF FF 
+ 215 03 00 80 00 
+ -215 02 80 00 
+ 
+ 
+Real [X.690 8.5] 
+Real values must be encoded in binary form [X.690 8.5.6], base 2 [X.690 8.5.6.2]. Maximum 
+precision shall be double (64 bit). 
+ 
+UTF8String [X.690 8.21] 
+The UTF8 encoding is supported. 
+ 
+Octet String [X.690 8.7] 
+This type shall be used to encode junks of binary data. The encoding must be primitive; splitting 
+the octet string [X.690 8.7.3] is not permitted. 
+Null [X.690 8.8] 
+This type shall be used to indicate that a parameter value is no longer present.  
+Relative Object Identifier [X.690 8.20] 
+A relative object identifier is a sequence of integers, which identify an object within a tree. The 
+object identifier is encoded by writing the encoded length first, followed by all components 
+encoded as multi-byte integers. 
+Set [X.690 8.11] 
+Every item in a “Set” container shall be implicitly optional. Therefore, an empty set is allowed. 
+The tags of values in a Set container must be unique within the container context [X.680 26.3]. 
+The order of values in a set shall be arbitrary [X.680 26.6]. 
+ 
+Sequence [X.690 8.9, X.690 8.10] 
+This container shall represent the concept of either an ordered collection or a list type 
+(Sequence-of [X.690 8.10]). The order of child values may be semantically significant [X.690 
+--- Page 14 ---
+Ember+ protocol specification        Lawo GmbH 
+15 
+8.10.3]; therefore, tags do not necessarily have to be unique within the container context, 
+though it is recommended to ensure tag uniqueness. 
+ 
+ 
+Implementation recommendations 
+ 
+Encoder 
+Ember puts a complex job upon the encoding entity: the encoder must calculate the number of 
+octets the encoding process will yield before the actual encoding is done. This is because the 
+length octets are transmitted prior to the data octets. To make things worse, the tag and length 
+octets preceding the data also vary in number. This makes it almost impossible to encode entire 
+containers on the fly. 
+For encoding entities equipped with powerful hardware resources (like workstation and server 
+PCs), it is therefore recommended to build the encoding in a DOM – like object tree, thereby 
+calculating the length of each container node. This tree is easy to modify and quick to write out, 
+but can possibly consume lots of memory. 
+For encoding entities that are based on less powerful hardware like embedded devices, hope 
+lies in the generosity of the Basic Encoding Rules, which Ember does not confine: 
+● To encode containers, the encoder is free to use the indefinite length form instead of 
+pre-calculating the number of value octets (which in turn contain each component’s tag, 
+length and value octets). 
+● The encoder is free to use the definite long length form [X.690 8.1.3.5] even for lengths 
+smaller than 128. This allows fixing the number of octets used for length fields to – as an 
+example – four. 
+● Depending on the DTD, a fixed number of octets can also be used to encode tags. E.g. if 
+the DTD defines a maximum tag number of 127 (remember that tags are context-specific 
+by default!), an encoder can always use two bytes to encode a tag – with the second 
+byte containing the actual tag number and the five least significant bits of the first byte all 
+set to “1”. 
+● Most primitive types inherently have a maximum length that is dependent on the 
+encoder’s hardware. E.g. for a 16-bit embedded system, the maximum number of octets 
+an integer can be encoded into is usually 4 (for 32-bit “long” values). Thus, the value can 
+be encoded into a fixed-length memory block, returning the number of bytes written. 
+ 
+Decoder 
+Decoding an Ember stream is quite straight-forward, and the implementation should be the 
+same for systems with powerful hardware resources as for embedded systems. 
+A decoder should implement one function to read and store the next item (tag, length and value) 
+from the input stream. Additional functions should be implemented to convert the current value 
+to the type indicated by the inner tag. 
+Stepping through the containers can either be implemented using recursion or by stacking 
+container objects. 
+ 
+ 
+--- Page 15 ---
+Ember+ protocol specification        Lawo GmbH 
+16 
+Glow specification 
+Introduction 
+This chapter describes the Glow specification, which is written in ASN.1 and called the Glow 
+DTD (Design Type Document). The DTD defines several object types that are required for a 
+device to represent its structure. The number of types is kept at a minimum so that it can be 
+used for almost any kind of device. The most frequently used types are node and parameter. A 
+node represents a device and its elements, like modules, any kind of extension cards or 
+attached panels. Additionally, it may be used to introduce categories, like “Sources” and 
+“Targets”.  
+A parameter then contains the properties of a control, like the range, the access (read, write, 
+read-write, none), the name and so on. Other types supported are a matrix, which can be used 
+to represent cross points; and functions, which can be invoked by a consumer. 
+ 
+Data types and properties 
+The tag format 
+As already mentioned, a tag may indicate the meaning and the type of the encoded data that 
+follows next. A tag consists of two components, a class - which uses one byte - and a number, 
+using up to four bytes. The combination of both defines the type. 
+ 
+The tag class accepts the following values: 
+ 
+Name Value Description 
+Universal 0x00 Predefined types. Should never be used. 
+Application 0x40 Application specific tags have the same meaning wherever seen and used. 
+Context 0x80 The meaning context specific tags depends on the location where they are seen 
+Private 0xC0 A special version of the context specific tag 
+ 
+--- Page 16 ---
+Ember+ protocol specification        Lawo GmbH 
+17 
+If the tag defines a container type, like set or sequence, the 6th bit of the tag is set. Alternatively, 
+a binary OR operation can be performed (Class | 0x20). The meaning of the tag number 
+depends on the class. If it is set to “Universal” it defines one of the default data types. The 
+following table shows a list of standard BER types: 
+ 
+Number Type 
+1 Boolean 
+2 Integer 
+3 Bitstring 
+4 Octet String 
+5 Null 
+6 Object Identifier 
+7 Object Descriptor 
+8 External 
+9 Real 
+10 Enumerated 
+11 Embedded Pdv 
+12 UTF8 String 
+13 Relative Object 
+16 Sequence 
+17 Set 
+18 Numeric String 
+19 Printable String 
+20 Teletex String 
+21 Videotex String 
+22 IA5 String 
+23 UTC Time 
+24 Generalized Time 
+25 Graphic String 
+26 Visible String 
+27 General String 
+28 Universal String 
+29 Unspecified String 
+30 BMP String 
+31 Last Universal 
+0x80000000 Indicates an application 
+defined type 
+ 
+Note that only the required subset of the universal types is supported in this library. 
+ 
+For example, a tag with the class set to “Universal” and the number set to 1 indicates that the 
+encoded data represents a Boolean value. 
+ 
+Application defined tags 
+All other tag classes (Application and Context) may be used to define application specific types 
+or, if used as (outer) application-tag, to indicate the usage. Each encoded object contains two 
+tags, the first one identifying the meaning or semantics of the data or object, while the second 
+one specifies the data type. 
+The Glow specification uses a set of attributes which are used to describe a node or parameter. 
+Two common attributes are the identifier and the description string. The following section lists all 
+attributes used by the Glow DTD. Since these attributes differ for each object type they are 
+context specific. Please note that “Value” simply means that a property may be an Integer, Real, 
+--- Page 17 ---
+Ember+ protocol specification        Lawo GmbH 
+18 
+UTF8String, an octet string value or a Boolean. The details about the “Value” type can be found 
+in the next chapter. 
+Application defined types 
+In many cases the universal types suffice the requirements. Nevertheless, it is possible to 
+declare application defined types. Ember+ defines several types like Node, Parameter and 
+Command.  
+The tag class of user defined types is set to “Application”-specific, while the number determines 
+the type itself. The EmBER library provides a Type class which can be used to distinguish 
+between universal and application defined types. The following section lists the types and their 
+meaning used and defined by the Glow specification.  
+The complete ASN.1 notation of the Glow object types is listed in the chapter “Ember+ ASN.1 
+Notation”. Additionally, the chapter contains detailed descriptions about all objects for clarity. 
+ 
+Element 
+The element is a choice that contains one of the following types: 
+▪ Parameter 
+▪ Node 
+▪ Command 
+▪ StreamCollection 
+▪ Matrix          Glow 2.10+ 
+▪ Function          Glow 2.20+ 
+RootElement 
+▪ Element 
+▪ QualifiedNode 
+▪ QualifiedParameter 
+▪ QualifiedMatrix         Glow 2.10+ 
+▪ QualifiedFunction         Glow 2.20+ 
+ 
+The type an element contains can be determined by the type tag. The Qualified types must 
+only appear at root level, to reduce the complexity of the tree structure. 
+ 
+Value 
+A value is a choice that contains one of the following types: 
+▪ Integer 
+▪ Real 
+▪ UTF8String 
+▪ Boolean 
+▪ Octet String 
+▪ Null          Glow 2.50+ 
+ 
+--- Page 18 ---
+Ember+ protocol specification        Lawo GmbH 
+19 
+Parameter 
+Type Tag: Application – 1 
+Type:  Sequence 
+Members:  
+▪ Number 
+▪ Contents, which may contain: 
+▪ Identifier 
+▪ Description 
+▪ Value 
+▪ Minimum 
+▪ Maximum 
+▪ Access 
+▪ Format 
+▪ Enumeration 
+▪ Factor 
+▪ Online 
+▪ Formula 
+▪ Default 
+▪ Type 
+▪ Command 
+▪ StreamIdentifier 
+▪ EnumMap 
+▪ StreamDescriptor 
+▪ Template Reference 
+▪ Children (must contain at most one Command) 
+ 
+A parameter represents an entity that at least contains a value.  
+ 
+When a data provider reports a parameter, the message must always contain the number. 
+All other properties are optional and are listed within a set with Tag Context – 1. In general, 
+automatic change notifications should only contain the properties that have changed, except 
+when the parameter is marked as a stream. More behaviour rules can be found in the 
+chapter “Behaviour rules and other guidelines”. 
+ 
+From the Glow DTD version 2.50, a parameter value can be null. This allows a provider to 
+inform a consumer that a value is currently not present. However, when a parameter value 
+shall be nullable, the provider must follow two rules when reporting the parameter as a 
+response to a GetDirectory request: 
+1. The type property must be set and indicate the type a parameter has when a value is 
+present. 
+2. The default property must be set to null. 
+ 
+That way, a consumer knows whether a parameter is nullable or not when querying the 
+provider’s tree, which allows him to initialize internal structures as needed. 
+--- Page 19 ---
+Ember+ protocol specification        Lawo GmbH 
+20 
+ 
+QualifiedParameter 
+Type Tag: Application – 9 
+Type:  Sequence 
+Members:  
+▪ Path 
+▪ Contents (same as Parameter) 
+▪ Children (must contain at most one Command) 
+ 
+The contents are equal to those of the Parameter type. In comparison to the default 
+Parameter object, the QualifiedParameter reports its complete path instead of its 
+number. That way a parameter that is located in a large sub tree can be reported without 
+the need to construct the whole tree structure, which saves CPU time and reduces the 
+resulting packet size. 
+ 
+Command 
+Type Tag: Application – 2 
+Type:  Sequence 
+Members: Number 
+ 
+A command may be appended to a node. a parameter, or a matrix as child element 
+inside the ElementCollection property. It contains an integer identifying the command 
+type, which may be GetDirectory, Subscribe or Unsubscribe. 
+ 
+Note: When the command is GetDirectory, an additional property called DirFieldMask 
+can be provided. For details please see the GetDirectory command. 
+ 
+Node 
+Type Tag: Application – 3 
+Type:  Sequence 
+Members:  
+▪ Number 
+▪ Contents, which may contain: 
+▪ Identifier 
+▪ Description 
+▪ IsRoot 
+▪ IsOnline 
+▪ Template Reference 
+▪ Children 
+ 
+--- Page 20 ---
+Ember+ protocol specification        Lawo GmbH 
+21 
+A node represents a device or one of its components. Like the parameter, is must 
+contain a number which identifies the node while the session is active. All other 
+properties are optional and therefore listed in a separate set. 
+ 
+QualifiedNode 
+Type Tag: Application – 10 
+Type:  Sequence 
+Members:  
+▪ Path 
+▪ Contents 
+▪ Children 
+ 
+The contents are equal to the Node type. Compared to the default Node, the 
+QualifiedNode reports its complete path, instead of only providing its number. That way, 
+a node that is located in a big sub tree may also be reported at root level. 
+ 
+ElementCollection 
+Type Tag: Application – 4 
+Type:  Sequence 
+Members: Entries of type Element 
+ 
+The ElementCollection is a sequence of Element types. A node may contain an 
+ElementCollection with commands or children. All other elements must at most contain a 
+single command. 
+ 
+RootElementCollection 
+Type Tag: Application – 11 
+Type:  Sequence 
+Members: RootElement 
+ 
+When reporting one or more elements they must be part of this container. 
+ 
+Root 
+App. Tag: Application – 0 
+Type:  Choice of RootElementCollection, StreamCollection or InvocationResult 
+ 
+StreamEntry 
+Type Tag: Application – 6 
+Type:  Sequence 
+--- Page 21 ---
+Ember+ protocol specification        Lawo GmbH 
+22 
+Members: StreamIdentifier, Value 
+ 
+Stream entries are used to report audio level data. A StreamEntry is a sequence 
+consisting of the unique stream-identifier and the current value. Its contents must be 
+transmitted in the specified order. The advantage of the standard parameter value 
+notification is that a stream notification results in smaller packets. And since a stream is 
+mapping by a single number, the associated parameter can be accessed faster. 
+ 
+StreamCollection 
+Type Tag: Application – 5 
+Type:  Sequence 
+Members: Entries of type StreamEntry 
+ 
+A StreamCollection is sequence of StreamEntry elements. 
+ 
+StringIntegerPair 
+Type Tag:  Application – 7 
+Type:  Sequence 
+Members: Name, Value 
+ 
+A tuple containing an enumeration name and an integer value. This type is used by the 
+StringIntegerCollection, which is used by the EnumMap property. 
+ 
+StringIntegerCollection 
+Type Tag: Application – 8 
+Type:  Sequence 
+Members: Entries of type StringIntegerPair  
+ 
+The StringIntegerCollection is a sequence that contains StringIntegerPairs. This 
+structure is used by the enumeration map. 
+ 
+  
+--- Page 22 ---
+Ember+ protocol specification        Lawo GmbH 
+23 
+Glow specific properties 
+This chapter describes all properties that are used within this protocol. 
+Application specific properties 
+Root 
+Tag: Application – 0 
+Type: RootElementCollection, StreamCollection, InvocationResult 
+ 
+Each ember message must start with a RootElementCollection, the StreamCollection or 
+the InovcationResult.  
+Default Element 
+Tag: Context – 0  
+Type: Usually used for a collection of nodes or parameters, where the tag is not used. 
+ 
+Node properties 
+All Node properties are context specific. 
+Number 
+Tag:  Context – 0 
+Type: Integer 
+ 
+Each node must have a number that is unique within the current scope. It must not 
+change while a session is active because it may be used to identify a node or parameter 
+by using this number instead of its string identifier. The number must be equal to or 
+greater than zero. 
+Contents 
+Tag:  Context – 1 
+Type: Set 
+ 
+This set contains the optional properties of a node. 
+Children 
+Tag: Context – 2  
+Type: Sequence 
+ 
+The Children property is a sequence that contains the child-nodes and parameters of 
+this node. 
+ 
+QualifiedNode properties 
+All QualifiedNode properties are context specific 
+ 
+--- Page 23 ---
+Ember+ protocol specification        Lawo GmbH 
+24 
+Path 
+Tag:  Context – 0 
+Type: Relative Object Identifier 
+ 
+The Path property contains the numeric path of this node.  
+Contents 
+Tag:  Context – 1 
+Type: Set 
+ 
+This set contains the optional properties of a node. 
+Children 
+Tag: Context – 2  
+Type: ElementCollection 
+ 
+The Children property is a sequence that contains the child nodes and parameters of 
+this node. 
+ 
+Node Contents 
+Identifier 
+Tag: Context – 0 
+Type: UTF8String 
+ 
+This property contains the string identifier of a node. This name must be unique within 
+the current scope, which means that all child nodes of one parent must have different 
+names. The identifier of an entity must not change! Please also read the naming rules 
+described in “The identifier property”. 
+Description 
+Tag: Context – 1 
+Type:  UTF8String 
+The Description contains the display name of a node. This property shall be displayed by 
+a user interface if it is provided. Otherwise, the identifier should be used. 
+IsRoot 
+Tag: Context – 2 
+Type: Boolean 
+ 
+The IsRoot property indicates whether the current node is a root node or not. This flag 
+may be used by providers acting as a kind of proxy, where several sub trees of different 
+devices are merged into one tree. 
+IsOnline 
+--- Page 24 ---
+Ember+ protocol specification        Lawo GmbH 
+25 
+Tag: Context – 3 
+Type: Boolean 
+Indicates whether the node is online or not. The default value is true. If a node is marked 
+offline, all of its children must be considered offline as well. 
+SchemaIdentifiers 
+Tag: Context – 4 
+Type: Boolean 
+A single string comprised of schema identifiers separated by line feeds (‘\n’, 0). Each line 
+identifies a schema that the sub-tree under this node complies with. See chapter 
+Ember+ 1.3: Schema Extensions. 
+TemplateReference 
+Tag: Context – 5 
+Type: ObjectIdentifier 
+The template reference specifies the path of a template, which contains the structure 
+and defaults of the current element. 
+Parameter properties 
+All Parameter properties are context specific. 
+Number 
+Tag:  Context – 0 
+Type: Integer 
+ 
+Each parameter must have a number that is unique within the current scope. It must not 
+change while a session is active because it may be used to identify a parameter by 
+using this number instead of its string identifier. The number must be equal to or greater 
+than zero.  
+Contents 
+Tag:  Context – 1 
+Type: Set 
+ 
+This set contains the optional properties of a parameter. 
+Children 
+Tag:  Context – 2 
+Type: ElementCollection 
+ 
+This collection may contain a command for the current parameter. 
+ 
+QualifiedParameter properties 
+All Parameter properties are context specific. 
+--- Page 25 ---
+Ember+ protocol specification        Lawo GmbH 
+26 
+Path 
+Tag:  Context – 0 
+Type: Relative Object Identifier 
+ 
+This property contains the numeric path of a parameter.  
+Contents 
+Tag:  Context – 1 
+Type: Set 
+ 
+This set contains the optional properties of a parameter. 
+Children 
+Tag:  Context – 2 
+Type: ElementCollection 
+ 
+This collection may contain a command for the current parameter. 
+ 
+Parameter Contents 
+Identifier 
+Tag: Context – 0 
+Type: UTF8String 
+ 
+This property contains the string identifier of a parameter. This name must be unique 
+within the current scope, which means that all child nodes and parameters of one parent 
+must have different names. The identifier of an entity must not change! 
+Description 
+Tag: Context – 1 
+Type:  UTF8String 
+ 
+Display name of a parameter. This property shall be displayed by a user interface if it is 
+provided. Otherwise, the identifier should be used. 
+Value 
+Tag:  Context – 2 
+Type: Value 
+ 
+This field stores the current value of a parameter. Supported types are Integer, Real and 
+String. If the value contains an enumeration the type must be integer and the value 
+contains the index of the enumeration entry to display, starting at index 0. 
+Sending a value implies that the node is online. A consumer which receives a value 
+should mark this node and its parents as online. A provider MUST NOT send values in a 
+tree node which is actively held offline by itself or any of its parent. 
+--- Page 26 ---
+Ember+ protocol specification        Lawo GmbH 
+27 
+ 
+Minimum 
+Tag: Context – 3 
+Type: Value 
+ 
+The Minimum property contains the smallest value allowed, which may either be a real 
+or integer value. 
+ 
+Maximum 
+Tag: Context – 4 
+Type: Value 
+ 
+The Maximum property contains the largest value allowed, which may either be a real or 
+integer value. 
+ 
+Access 
+Tag: Context – 5 
+Type: Integer 
+ 
+Indicates how this parameter can be accessed. The following values are available: 
+▪ None (0) 
+▪ Read Only (1) 
+▪ Write Only (2) 
+▪ Read/Write (3) 
+Format 
+Tag: Context – 6 
+Type: UTF8String 
+ 
+This is an optional format string. This property may contain a C-Style format string which 
+may be used to append a unit or define the number of digits that should be displayed. 
+To simplify implementation of creating a format string on consumer side, only the format-
+characters d, f and x must be used. For example, “%.2f°\ndB” or “%d Units” are valid 
+format strings. The ° character should be used to indicate where the unit string begins. 
+Enumeration 
+Tag: Context – 7 
+Type: UTF8String 
+ 
+A single string containing the values of an enumeration, separated by a line feed (‘\n’, 
+10). The values must internally be enumerated from 0 to N. If an entry shall not be 
+displayed in a user interface, the entry must begin with ‘~’. 
+--- Page 27 ---
+Ember+ protocol specification        Lawo GmbH 
+28 
+Factor 
+Tag: Context – 8 
+Type: Integer 
+ 
+This property may be used if a device is not able to process decimal values. It may then 
+provide a factor instead. The consumer then has to divide the reported value when it 
+displays it and multiply it with this factor when it wants to change the parameter. The 
+type of the factor is integer. 
+The same rule applies to the default, minimum and maximum of the parameter, if 
+specified. All properties have to be reported in the same unit. 
+If a factor is specified, a formula must not be provided. 
+IsOnline 
+Tag: Context – 9 
+Type: Boolean 
+ 
+This field contains the online state. When a node reports an offline state, the consumer 
+should assume that all child nodes are offline as well. On the other side, when a node 
+reports an online state, only the parents of this node may be changed to online. 
+Formula 
+Tag: Context – 10 
+Type: UTF8String 
+ 
+The Formula is an optional mathematical term. The device must provide two formulas 
+separated by a linefeed character (‘\n’, 10). The first formula is used to transform the 
+device value into a display value (provider to consumer), while the second one is used 
+transform it back to a device value again (consumer to provider).  
+If a formula is specified, a factor must not be provided. 
+ 
+Note 
+Please note that there are two formats supported: 
+▪ A term can be provided as RPN term, without a character that represents a 
+variable for the current device value. An example would be 5*, which would 
+multiply the current device value with 5. The device value always has to be 
+pushed on the computation stack first. 
+▪ When the expression is enclosed in parentheses a term is interpreted as 
+mathematical expression, including the $ character as placeholder for the current 
+device value. A valid term would be (5 * $). 
+A detailed description of all supported functions can be found in the document 
+“Ember+ Formulas”. 
+ 
+The RPN variant is provided for backward compatibility. 
+ 
+--- Page 28 ---
+Ember+ protocol specification        Lawo GmbH 
+29 
+Step 
+Tag: Context – 11 
+Type: Integer 
+ 
+This property specifies the step to use when incrementing or decrementing a value. 
+Using this property should be avoided, since it causes problems when using real values. 
+Instead the Factor should be used in combination with a value of type integer. 
+ 
+This property may be removed in future releases of the Ember+ libraries. 
+ 
+Default 
+Tag: Context – 12 
+Type: Value 
+ 
+Default value of a parameter. 
+Type 
+Tag: Context – 13 
+Type: Integer 
+ 
+The Type can be used to provide a hint about the value type of the parameter. The 
+following values are currently available: 
+▪ Integer (1) 
+▪ Real (2) 
+▪ String (3) 
+▪ Boolean (4) 
+▪ Trigger (5) 
+▪ Enum (6) 
+▪ Octets (7) 
+StreamIdentifier 
+Tag: Context – 14 
+Type: Integer 
+ 
+A number used to identify an audio level meter, or any other kind of data that changes 
+frequently. Since peak meter data is usually reported frequently (like every 80ms) it may 
+be necessary to use a separate transport layer like UDP in order to transmit their values. 
+That’s why audio streams require a globally unique identifier which must not be negative. 
+Their values are being reported in a separate container, the StreamCollection. 
+This allows transmitting those frequently changing values in a more compact way, since 
+only the numeric stream identifier and the current value need to be reported. 
+A parameter that contains a stream-identifier requires an explicit subscription in order to 
+report its value via the StreamCollection. Additionally, its type must not be a string or 
+Boolean. It is intended to be used for numeric values only. 
+--- Page 29 ---
+Ember+ protocol specification        Lawo GmbH 
+30 
+However, if a GetDirectory is sent for the parameter, the Value property shall contain the 
+current value. 
+For more information, see also StreamCollection, StreamDescriptor. 
+EnumMap 
+Tag: Context – 15 
+Type: StringIntegerCollection 
+ 
+This field provides a more complex description of an enumeration. The 
+StringIntegerCollection is a sequence of a StringIntegerPair which is tuple name, value 
+tuple. This field can be used if a device is unable to use a consecutive enumeration. 
+StreamDescriptor 
+Tag: Context – 16 
+Type: StreamDescription 
+ 
+A StreamDescriptor is required when a single stream entry contains more than one 
+value and is provided as octet string. The descriptor then provides the internal data 
+offset and the stream value format. The formats available can be found in the DTD at the 
+end of the document. 
+The descriptor is used additionally to the StreamIdentifier and provides a way to transmit 
+values in a raw array of bytes. This array may contain an arbitrary number of stream-
+values, for each parameter that has the same StreamIdentifier. The descriptor specifies 
+where the data for a parameter is located within the buffer and how to decode it. 
+The value type of the descriptor must match the Type or the Value property. 
+ 
+Note 
+The streaming mechanism is typically used to transmit several values within a small 
+interval. Therefore, there should be as less overhead as possible. 
+ 
+SchemaIdentifiers 
+Tag: Context – 17 
+Type: Boolean 
+A single string comprised of schema identifiers separated by line feeds (‘\n’, 0). Each line 
+identifies a schema that the parameter complies with. See chapter Ember+ 1.3: Schema 
+Extensions. 
+TemplateReference 
+Tag: Context – 8 
+Type: ObjectIdentifier 
+The template reference specifies the path of a template, which contains the structure 
+and defaults of the current element. 
+ 
+--- Page 30 ---
+Ember+ protocol specification        Lawo GmbH 
+31 
+Application defined commands 
+In addition to these properties there is also a small list of commands. Commands are only used 
+by the consumer; the provider always only has to respond or report its current status. The 
+command type is determined by the number of a command, which must always be provided. 
+ 
+GetDirectory 
+Number:  32 
+ 
+This command may be executed on a node and a parameter. It requests all child nodes 
+and parameters of the node containing this command. The response shall also include 
+all attributes of the reported entities.  
+The purpose of this command is to obtain the complete or only a part of the structure of 
+a data provider.  
+Additionally, this command implicitly indicates that a consumer is interested in the 
+entities below the node the command has been sent for. That means, that parameters 
+belonging to this node should report value changes to the consumer automatically. 
+When a consumer performs a GetDirectory request on a node without any children, the 
+node must report itself without any properties set (even the identifier has to be omitted). 
+Otherwise it is not possible to distinguish it from an ordinary update. That way, the 
+consumer knows that a query has been performed on this node and that it has no child 
+elements. 
+ 
+This command can also be applied to a parameter to query its properties.  
+ 
+Besides, a dirFieldMask can also be provided, which is tagged with “Context – 1”. This 
+mask determines the properties a consumer is interested in: 
+▪ Sparse (-2)       Glow 2.50+ 
+▪ All (-1) 
+▪ Default (0) 
+▪ Identifier (1) 
+▪ Description (2) 
+▪ Tree (3) 
+▪ Value (4) 
+ 
+All and Default should return the same result, which is an element with all its properties 
+set. When a consumer requests a property that doesn’t exist, the provider should report 
+the element without any properties and an empty contents set. 
+ 
+ 
+Subscribe 
+Number: 30 
+ 
+This command is used to subscribe to a parameter which has a StreamIdentifier. 
+Parameters without StreamIdentifier should report their value changes automatically (at 
+the latest when a parameter has been queried by GetDirectory command), while a 
+parameter that has a StreamIdentifier only transmits its changes when it is explicitly 
+subscribed. 
+--- Page 31 ---
+Ember+ protocol specification        Lawo GmbH 
+32 
+The main purpose of the subscription mechanism is to reduce network traffic and the 
+CPU load for devices with limited resources. A common example is the transmission of 
+audio levels for multiple channels. These values usually change frequently (several 
+times per second) and in many cases a consumer is not interested in receiving these 
+updates all the time. 
+So, for parameters that change often, a StreamIdentifier should be used to avoid that the 
+provider must encode and transmit the updated values all the time, although no one is 
+currently interested in receiving them. When a StreamIdentifier is set for a parameter, a 
+consumer must explicitly subscribe to this parameter. That way, the provider knows that 
+someone is interested in receiving value updates and transmits them. But these updates 
+are not being sent in the usual way, these values are transported within a 
+StreamCollection container instead, which contains a list of StreamEntries. This 
+structure results in smaller packets since it only contains the stream identifier of the 
+corresponding parameter and the current value. 
+ 
+ 
+Unsubscribe 
+Number: 31 
+ 
+This command is used to unsubscribe from a node or parameter. When applied to a 
+node, it indicates that the consumer is no longer interested in receiving value updates 
+from the parameters that are located below this node. In that case, all parameter 
+subscriptions for that consumer must be removed. 
+When applied to a single parameter, only the existing subscription for the consumer that 
+sent the request must be removed. 
+ 
+  
+--- Page 32 ---
+Ember+ protocol specification        Lawo GmbH 
+33 
+Ember+ 1.1: Matrix Extensions 
+ 
+Introduction 
+This chapter describes how Ember+ 1.1 integrates matrices into the Glow schema, which for 
+Ember+ 1.1 has the version 2.10. A matrix in the sense of this chapter is a two-dimensional 
+array of Boolean values. 
+Possible applications of matrices in the context of gadget control: 
+- Signal routing 
+- GP-I/O signaling 
+- Key assignment for Intercom systems 
+- Group and conference management for Intercom systems 
+- Bus assignments of summation matrices (e.g. Mixing Consoles) 
+The entities represented by the rows and columns of a matrix are called signals. The signals 
+represented by the matrix columns are called targets. The signals represented by the matrix 
+rows are called sources.  
+The values contained in the matrix cells may be interpreted as connections from sources to 
+targets: If matrix[S, T] is true, source S is connected to target T. 
+Matrices inherently have three different connection semantics: 
+- 1:N 
+one source may be connected to n targets, but each target must not be connected to 
+more than one source 
+- 1:1 
+one source may be connected to only one target, and each target must not be 
+connected to more than one source 
+- N:N 
+a source may be connected to n targets, and a target may have n sources connected to 
+it. 
+Ember+ must support all three matrix types. 
+For N:N matrices, connections are usually described by multiple values – not only the Boolean 
+state of the connection, but also a ratio or weight for each connected source. This proposal 
+takes this into account by allowing a matrix to refer to a collection of Parameters describing 
+each signal and connection. 
+Also, the signals making up a matrix may have multiple labels, each of which may be editable. 
+This proposal takes this into account by allowing a matrix to refer to multiple collections of 
+Parameters which describe signal labels. 
+ 
+Type Definitions 
+Glow 2.10 introduces several new application-defined types, the most important of which is 
+called Matrix. 
+--- Page 33 ---
+Ember+ protocol specification        Lawo GmbH 
+34 
+This new type stands alongside the types Node and Parameter (which are already defined in 
+Glow 2.5). 
+ 
+Matrix 
+• number [0] Integer32 
+The number of the matrix object. Has same semantics as Parameter.number and 
+Node.number. 
+• contents [1] MatrixContents OPTIONAL 
+Contents set of the matrix object. Analogical to Parameter.contents and 
+Node.contents. 
+• children [2] ElementCollection OPTIONAL 
+Contains child elements of the matrix object. Conceptually, matrix objects are 
+considered leafs in the Glow tree. Though, a matrix may contain a Glow Command in 
+the same way as a parameter. 
+• targets [3] TargetCollection OPTIONAL 
+A collection of Target objects that fill columns of the matrix. This property must only be 
+present if the matrix addressing mode is non-linear. A linear matrix may use this property 
+to restrict connections to the targets listed under this property. 
+• sources [4] SourceCollection OPTIONAL 
+A collection of Source objects that fill rows of the matrix. This property must only be 
+present if the matrix addressing mode is non-linear. A linear matrix may use this property 
+to restrict connections to the sources listed under this property. 
+• connections [5] ConnectionCollection OPTIONAL 
+A collection of Connection objects that describe each target’s active connection. The 
+provider must report one Connection object for each target. 
+When the children of a node are requested (using the GetDirectory command) and this node 
+contains a Matrix object, the matrix is transmitted only containing the properties number and 
+contents. 
+The consumer may then issue a GetDirectory command as a child of the matrix object. The 
+provider must reply with the complete matrix object, containing at least the property 
+connections. In the case of a matrix with non-linear addressing mode, the targets and 
+sources properties are also required. 
+As soon as a consumer issues a GetDirectory command on a matrix object, it implicitly 
+subscribes to matrix connection changes. The consumer may afterwards use the Unsubscribe 
+command to cancel this subscription. 
+When any properties of the matrix change at runtime, a provider shall report the contents to all 
+consumer that are subscribed to the matrix. 
+MatrixContents 
+• identifier [0] EmberString 
+The object identifier. Analogical to Parameter.identifier and Node.identifier. 
+• description [1] EmberString OPTIONAL 
+--- Page 34 ---
+Ember+ protocol specification        Lawo GmbH 
+35 
+The display name of the matrix object. Analogical to Parameter.description and 
+Node.description. 
+• type [2] MatrixType OPTIONAL 
+The type of the matrix: either 1:N, 1:1 or N:N. If this property is not present, 1:N is 
+assumed. 
+• addressingMode [3] MatrixAddressingMode OPTIONAL 
+The addressing mode used by the matrix. Either linear (signal numbers are row/column 
+indices) or non-linear (signal numbers are random). 
+• targetCount [4] Integer32 
+If addressingMode is linear, this defines the number of matrix columns. If 
+addressingMode is non-linear, this defines the number of targets contained in the 
+targets property. 
+• sourceCount [5] Integer32 
+If addressingMode is linear, this defines the number of matrix rows. If addressingMode 
+is non-linear, this defines the number of sources contained in the sources property. 
+• maximumTotalConnects [6] Integer32 OPTIONAL 
+This property is only significant for N:N matrices. It defines the maximum number of 
+active connections for the entire matrix. If this property is not present, targetCount * 
+sourceCount is assumed. 
+• maximumConnectsPerTarget [7] Integer32 OPTIONAL 
+This property is only significant for N:N matrices. It defines the maximum number of 
+sources that may be connected to one target. If this property is not present, 
+sourceCount is assumed. 
+• parametersLocation [8] ParametersLocation OPTIONAL 
+This property may refer to the location of parameters associated with the signals and 
+connections of the matrix. 
+• gainParameterNumber [9] Integer32 OPTIONAL 
+This property is only significant for N:N matrices and may only be present if the 
+parametersLocation property is also present. It may contain the number of the 
+parameter that describes the gain or ratio of a connection. This parameter must exist for 
+every connection under the location referred to by the parametersLocation property. It 
+must be either of type INTEGER or of type REAL. 
+• labels [10] LabelCollection OPTIONAL 
+This property may contain multiple references to Nodes which contain signal label 
+parameters. These parameters must be of type EmberString. 
+• schemaIdentifiers [11] EmberString OPTIONAL 
+A single string comprised of schema identifiers separated by line feeds (‘\n’, 0). Each line 
+identifies a schema that the matrix complies with. See chapter Ember+ 1.3: Schema 
+Extensions.  
+• templateReference [12] RELATIVE-OID OPTIONAL 
+A path to a template that specifies the default structure of the current matrix. 
+ 
+ 
+--- Page 35 ---
+Ember+ protocol specification        Lawo GmbH 
+36 
+ 
+MatrixType 
+• oneToN (0) 
+Default. The matrix uses 1:N connection semantics. 
+• oneToOne (1) 
+The matrix uses 1:1 connection semantics. 
+• nToN (2) 
+The matrix uses N:N connection semantics. 
+MatrixAddressingMode 
+• linear (0) 
+Default. The matrix uses linear addressing mode. 
+• nonLinear (1) 
+The matrix uses non-linear addressing mode. 
+ParametersLocation 
+• basePath RELATIVE-OID 
+Contains an absolute path to a node under which parameters associated with signals or 
+connections reside. 
+• inline Integer32 
+Contains a single sub-identifier to be appended to the path of the matrix. The resulting 
+path refers to the node under which parameters associated with signals or connections 
+reside. This node is not reported in a response to a GetDirectory command, since 
+huge matrices with hundreds or thousands of connections will not be able to publish all 
+connection and signal parameters in the Glow tree. The provider must create the 
+parameter objects on-the-fly when a GetDirectory command is issued to a sub-node 
+containing the parameters for a specific signal or connection. 
+ 
+The sub-tree under the node a ParametersLocation object refers to must be structured like 
+this: 
+--- Page 36 ---
+Ember+ protocol specification        Lawo GmbH 
+37 
+ 
+In this sample, a ParametersLocation object refers to the node “2 - parameters”. This node 
+must contain three well-known nodes: “1 – targets”, “2 – sources” and “3 – connections”. 
+The node “1 – targets” must contain one node for each target associated with parameters. 
+Each of these nodes must have the number of the corresponding target. 
+The node “2 – sources” must contain one node for each source associated with parameters. 
+Each of these nodes must have the number of the corresponding source. 
+The node “3 – connections” must contain one node for each target. These target nodes must 
+themselves contain one node for each source: 
+
+--- Page 37 ---
+Ember+ protocol specification        Lawo GmbH 
+38 
+ 
+To request all parameters associated with target 3, the consumer may issue a GetDirectory 
+command contained in a QualifiedNode object with the path “<parametersLocation>.1.3”. 
+To request all parameters associated with source 6, the consumer may issue a GetDirectory 
+command contained in a QualifiedNode object with the path “<parametersLocation>.2.6”. 
+To request all parameters associated with connection “target 9 <- source 12”, the consumer 
+may issue a GetDirectory command contained in a QualifiedNode object with the path 
+“<parametersLocation>.3.9.12”. 
+ 
+The content of a source, target or connection related node may also contain nodes or functions, 
+just like any subtree not referred to by a matrix. 
+Label 
+• basePath [0] RELATIVE-OID 
+This property contains an absolute path to a node under which label parameters 
+associated with signals reside. 
+• description [1] EmberString 
+This property contains a free-text description of the label, which may be used by 
+consumers to let the user choose the label to display. 
+The sub-tree under the node a Label.basePath refers to must be structured like this: 
+
+--- Page 38 ---
+Ember+ protocol specification        Lawo GmbH 
+39 
+ 
+In this sample, a Label.basePath refers to the node “1 - labels”. This node must contain two 
+well-known nodes: “1 – targets” and “2 – sources”. 
+The node “1 – targets” must contain one parameter of type EmberString for each target 
+associated with a label. Each of these parameters must have the number of the corresponding 
+target. 
+The node “2 – sources” must contain one parameter of type EmberString for each source 
+associated with a label. Each of these parameters must have the number of the corresponding 
+source. 
+Signal 
+• number [0] Integer32 
+This property contains the number of the signal. 
+If the addressing mode of the encompassing matrix is linear, this number is the zero-
+based index of the row or column containing the signal. 
+If the addressing mode of the encompassing matrix is non-linear, this is a random 
+number uniquely identifying the signal. 
+Connection 
+• target [0] Integer32 
+This property contains the number of the connection target. 
+• sources [1] PackedNumbers OPTIONAL 
+This property contains the numbers of all sources connected to target. If not present, 
+the target does not have any active connections. 
+• operation [2] ConnectionOperation OPTIONAL 
+This property may contain a hint on how the set of sources must be interpreted. If this 
+property is not present, “absolute” is assumed. 
+• disposition [3] ConnectionDisposition OPTIONAL 
+When the connection object is sent by the provider as the response to a connect 
+request, this property may contain an error code indicating the execution state of the 
+operation. If this property is not present, “tally” is assumed. 
+The consumer should not transmit this property at all when issuing connect requests. 
+PackedNumbers 
+
+--- Page 39 ---
+Ember+ protocol specification        Lawo GmbH 
+40 
+This type is an alias for the primitive ASN.1 type RELATIVE-OID. It is used to hold a vector of 
+integer values in a compact way. 
+ConnectionOperation 
+• absolute (0) 
+Default. This value indicates that the list of source numbers in the sources property of 
+the encompassing Connection object is absolute. When a provider tallies a connection, it 
+must always use this value, independent of the value of the disposition property. 
+• connect (1) 
+This indicates that the sources in the sources property of the encompassing Connection 
+object should be connected to the given target. Only used by the consumer when issuing 
+a connect request. 
+• disconnect (2) 
+This indicates that the sources in the sources property of the encompassing Connection 
+object should be disconnected from the given target. Only used by the consumer when 
+issuing a connect request. 
+ConnectionDisposition 
+• tally (0) 
+Default. The operation property of the encompassing Connection object must be set to 
+“absolute” and the sources property must contain the absolute set of sources currently 
+connected. This error level is usually only used when the list of connections is 
+transmitted in the response to GetDirectory command. 
+• modified (1) 
+This error level may be used by the provider to indicate that the connection has 
+changed. The sources property of the encompassing Connection must contain the 
+absolute set of sources currently connected. 
+• pending (2) 
+May be used by the provider to signal that the connect operation was queued, but is not 
+yet current. 
+• locked (3) 
+May be used by the provider to signal that the connect operation could not be executed 
+because the target is locked. The sources property of the encompassing Connection 
+must contain the absolute set of sources currently connected. 
+QualifiedMatrix 
+• path [0] RELATIVE-OID 
+The absolute path to the Matrix. Uses the same semantics as 
+QualifiedParameter.path and QualifiedNode.path. 
+• contents [1] MatrixContents OPTIONAL 
+See Matrix.contents. 
+• children [2] ElementCollection OPTIONAL 
+See Matrix.children. 
+--- Page 40 ---
+Ember+ protocol specification        Lawo GmbH 
+41 
+• targets [3] TargetCollection OPTIONAL 
+See Matrix.targets. 
+• sources [4] SourceCollection OPTIONAL 
+See Matrix.sources. 
+• connections [5] ConnectionCollection OPTIONAL 
+See Matrix.connections. 
+ 
+Use Cases 
+The following use cases are illustrated as XML samples (Glow is easily transposed to XML). 
+Transmission of the Matrix Description 
+ 
+Consumer -> Provider: 
+<QualifiedNode path="1.2"> 
+  <children> 
+    <Command number="32" /> 
+  </children> 
+</QualifiedNode> 
+This message requests all children under the node with path “1.2”. 
+ 
+Provider -> Consumer: 
+<QualifiedNode number="1.2"> 
+  <children> 
+    <Matrix number="1"> 
+      <contents> 
+        <identifier>matrix</identifier> 
+        <description>Sample Matrix</description> 
+        <targetCount>4</targetCount> 
+        <sourceCount>4</sourceCount> 
+        <type>nToN</type> 
+        <parametersLocation type="RelativeOid">1.2.2</parametersLocation> 
+        <gainParameterNumber>1</gainParameterNumber > 
+        <labels> 
+          <Label basePath="1.2.3.1" description="Primary" /> 
+          <Label basePath="1.2.3.2" description="Internal" /> 
+        </labels> 
+      </contents> 
+    </Matrix> 
+  </children> 
+</QualifiedNode> 
+This message reports one child under the requested node: a matrix of type N:N, with linear 
+addressing mode, 4 targets, 4 sources, a reference to associated parameters and references to 
+two layers of labels.  
+ 
+  
+--- Page 41 ---
+Ember+ protocol specification        Lawo GmbH 
+42 
+Transmission of Connections 
+ 
+Consumer -> Provider: 
+<QualifiedMatrix path="1.2.1"> 
+  <children> 
+    <Command number="32" /> 
+  </children> 
+</QualifiedMatrix> 
+This message requests all sub-elements of the matrix (targets, sources and connections). 
+ 
+Provider -> Consumer: 
+<QualifiedMatrix path="1.2.1"> 
+  <contents> 
+    <identifier>matrix</identifier> 
+    <!-- … --> 
+  </contents> 
+  <connections> 
+    <Connection target="0"> 
+      <sources>3</sources> 
+    </Connection> 
+    <Connection target="1"> 
+      <sources>0.1</sources> 
+    </Connection> 
+    <Connection target="2"> 
+      <sources>3.1.2</sources> 
+    </Connection> 
+    <Connection target="3" /> 
+  </connections 
+</QualifiedMatrix> 
+This message includes the matrix contents and connections. Targets and sources are omitted 
+since the matrix uses linear addressing mode. 
+ 
+Issuing Connects 
+ 
+Consumer -> Provider: 
+<QualifiedMatrix path="1.2.1"> 
+  <connections> 
+    <Connection target="0"> 
+      <sources>0.2</sources> 
+      <operation>connect</operation> 
+    </Connection> 
+    <Connection target="1"> 
+      <sources>2</sources> 
+      <operation>connect</operation> 
+    </Connection> 
+  </connections> 
+</QualifiedMatrix> 
+--- Page 42 ---
+Ember+ protocol specification        Lawo GmbH 
+43 
+This message requests a connection to be made from sources 0 and 2 to target 0 and a 
+connection to be made from source 2 to target 1. 
+ 
+Provider -> Consumer: 
+<QualifiedMatrix path="1.2.1"> 
+  <connections> 
+    <Connection target="0"> 
+      <sources>3.0.2</sources> 
+      <disposition>taken</disposition > 
+    </Connection> 
+    <Connection target="1"> 
+      <sources>0.2</sources> 
+      <disposition>taken</disposition> 
+    </Connection> 
+  </connections> 
+</QualifiedMatrix> 
+This message reports the new state of the connections to targets 0 and target 1. 
+ 
+Issuing Disconnects 
+ 
+Consumer -> Provider: 
+<QualifiedMatrix path="1.2.1"> 
+  <connections> 
+    <Connection target="0"> 
+      <sources>3</sources> 
+      <operation>disconnect</operation> 
+    </Connection> 
+  </connections> 
+</QualifiedMatrix> 
+This message requests source 3 to be disconnected from target 0. 
+ 
+Provider -> Consumer: 
+<QualifiedMatrix path="1.2.1"> 
+  <connections> 
+    <Connection target="0"> 
+      <sources>0.2</sources> 
+      <disposition>taken</disposition> 
+    </Connection> 
+  </connections> 
+</QualifiedMatrix> 
+This message reports the new state of the connections to target 0. 
+ 
+Requesting Labels 
+ 
+Consumer -> Provider: 
+<QualifiedNode path="1.2.3.1.1"> 
+--- Page 43 ---
+Ember+ protocol specification        Lawo GmbH 
+44 
+  <!-- path: 1.2.3.1       .1 
+             label.basePath targets --> 
+  <children> 
+    <Command number="32" dirFieldMask="4" /> 
+  </children> 
+</QualifiedNode> 
+This is a usual GetDirectory message issued on the first layer of target labels reported by the 
+matrix. It also asks the provider to only return the values of the found parameters. 
+Provider -> Consumer: 
+<QualifiedNode path="1.2.3.1.1"> 
+  <children> 
+    <Parameter number="0"> 
+      <contents> 
+        <value type="UTF8">Primary Label of Target 0</value> 
+      </contents> 
+    </Parameter> 
+    <Parameter number="1"> 
+      <contents> 
+        <value type="UTF8">Primary Label of Target 1</value> 
+      </contents> 
+    </Parameter> 
+    <Parameter number="2"> 
+      <contents> 
+        <value type="UTF8">Primary Label of Target 2</value> 
+      </contents> 
+    </Parameter> 
+    <Parameter number="3"> 
+      <contents> 
+        <value type="UTF8">Primary Label of Target 3</value> 
+      </contents> 
+    </Parameter> 
+  </children> 
+</QualifiedNode> 
+This response includes all label parameters. Note that each parameter’s number equals the 
+number of the target it is associated with. 
+ 
+Changing Labels 
+ 
+Consumer -> Provider: 
+<QualifiedParameter path="1.2.3.1.1.3"> 
+  <!-- path: 1.2.3.1       .1      .3 
+             label.basePath targets target3 --> 
+  <contents> 
+    <value type="UTF8">New Primary Label of Target 3</value> 
+  </contents> 
+</QualifiedNode> 
+This is the standard procedure for changing a parameter. 
+ 
+--- Page 44 ---
+Ember+ protocol specification        Lawo GmbH 
+45 
+Provider -> Consumer: 
+<QualifiedParameter path="1.2.3.1.1.3"> 
+  <contents> 
+    <value type="UTF8">New Primary Label of Target 3</value> 
+  </contents> 
+</QualifiedNode> 
+And this is the response signaling success. 
+ 
+Requesting Connection Parameters 
+ 
+Consumer -> Provider: 
+<QualifiedNode path="1.2.2.3.0.3"> 
+  <!-- path: 1.2.2             .3          .0      .3 
+             parametersLocation connections target0 source3 --> 
+  <children> 
+    <Command number="32" /> 
+  </children> 
+</QualifiedNode> 
+This is a usual GetDirectory message issued on the node including the parameters for 
+connection target0 <- source3.  
+ 
+Provider -> Consumer: 
+<QualifiedNode path="1.2.2.3.0.3"> 
+  <children> 
+    <Parameter number="1"> 
+      <contents> 
+        <identifier>gain</identifier> 
+        <description>gain of connection target0 <- source3</description> 
+        <value type="Real">-64.0</value> 
+        <minimum type="Real">-128.0</value> 
+        <maximum type="Real">15.0</maximum> 
+        <access>readWrite</access> 
+      </contents> 
+    </Parameter> 
+    <Parameter number="2"> 
+      <contents> 
+        <identifier>peak</identifier> 
+        <description>peak level of connection target0 <- 
+source3</description> 
+        <type>Integer</type> 
+        <minimum type="Real">0</value> 
+        <maximum type="Real">255</maximum> 
+        <streamIdentifier>110</streamIdentifier> 
+      </contents> 
+    </Parameter> 
+  </children> 
+</QualifiedNode> 
+--- Page 45 ---
+Ember+ protocol specification        Lawo GmbH 
+46 
+This response includes two parameters: a gain parameter and a streaming-enabled peak 
+parameter. 
+Changing Connection Parameters 
+ 
+Consumer -> Provider: 
+<QualifiedParameter path="1.2.2.3.0.3.1"> 
+  <!-- path: 1.2.2       .3          .0      .3      .1 
+       parametersLocation connections target1 source4 gain --> 
+  <contents> 
+    <value type="Real">10.0</value> 
+  </contents> 
+</QualifiedParameter> 
+This is the standard procedure for changing a parameter. 
+ 
+Provider -> Consumer: 
+<QualifiedParameter path="1.2.2.3.0.3.1"> 
+  <contents> 
+    <value type="Real">10.0</value> 
+  </contents> 
+</QualifiedParameter> 
+And this is the response signaling success. 
+ 
+Performance Characteristics 
+ 
+The following section lists common use cases and the number of bytes needed for transmission. 
+All byte lengths take into account framing and escaping. 
+• Response to GetDirectory command on 1:N matrix 200x200 (transmits matrix 
+contents, 200 targets, 200 sources, 200 connections): 6761 Bytes. 
+• Setting a single connection on same matrix (transmits 1 connection): 46 Bytes. 
+• Reporting a single connection with disposition “modified” on same matrix 
+(transmits 1 connection): 51 Bytes. 
+• Response to GetDirectory command on N:N matrix 4x4 with 4 active connections 
+(transmits matrix contents, 4 targets, 4 sources, 4 connections): 247 Bytes 
+• Response to GetDirectory command on same matrix but with 16 connections: 259 
+Bytes. 
+• Response to GetDirectory command on N:N matrix 1000x1000 with 1000 active 
+connections:  36517 Bytes. 
+• Same response as above, but only connections (GetDirectory command refined with 
+dirFieldMask): 16211 Bytes 
+• Response to GetDirectory command on same matrix but with hypothetical maximum 
+of 1000000 (one million) active connections: 2025838 Bytes (1.93 Mbytes) 
+• Reporting a connection of one target to 1000 sources on same matrix (transmits one 
+connection): 2051 Bytes. 
+--- Page 46 ---
+Ember+ protocol specification        Lawo GmbH 
+47 
+Ember+ 1.2: Function Extensions 
+ 
+Introduction 
+ 
+Although the main purpose of Ember+ is describing and mutating the state of interconnected 
+systems by encoding the state itself, there are use cases which require remote procedure calls 
+through the Ember+ interface. In some cases, the old way of triggering actions on the remote 
+host through usage of simple “trigger” parameters is not sufficient because of the lack of trigger 
+arguments. 
+Therefore this section describes how function calls are integrated into the Glow schema, which 
+for Ember+ 1.2 has the version 2.20. 
+Please note: functions should only be used to add transaction functionality to a tree that 
+otherwise describes the provider’s state by using parameters. Also, a provider must be aware 
+that a consumer (or a cluster of redundant consumers) may invoke a function multiple times 
+even if only one invocation was triggered by the user. This implies that a function should never 
+change the provider’s state relatively, but only absolutely – e.g. “goToPosition(int 
+absolutePosition)” instead of “changePositionBy(int relativeDelta)”. 
+ 
+Functions shall be described as leafs in the Glow tree (like parameters). The description shall 
+include the number, names and types of function arguments and the type definition of the 
+function’s return value. Both argument list and return value shall be described as n-tuples of 
+primitive types. 
+Functions shall be invoked through a new Command (“invoke” command): the consumer may 
+send a Function object containing an invoke command, which in turn contains the argument 
+values and an invocation id. The provider shall respond with an object of the new type 
+InvocationResult, which repeats the invocation id issued by the consumer and contains the 
+return value. 
+The consumer may issue “Fire and forget” function calls by omitting the invocation id. This shall 
+only be allowed for functions which do not yield a result. 
+ 
+Type Definitions 
+ 
+Function 
+• number      [0] Integer32, 
+The number of the Function object. Has same semantics as Parameter.number and 
+Node.number. 
+• contents    [1] FunctionContents    OPTIONAL 
+Contents set of the function object. Analogical to Parameter.contents and 
+Node.contents. 
+• children    [2] ElementCollection   OPTIONAL 
+--- Page 47 ---
+Ember+ protocol specification        Lawo GmbH 
+48 
+Contains child elements of the function object. Conceptually, function objects are 
+considered leafs in the Glow tree. Though, a function may contain a Glow Command in 
+the same way as a parameter or matrix. 
+ 
+QualifiedFunction 
+• path        [0] RELATIVE-OID 
+The absolute path to the Function. Uses the same semantics as 
+QualifiedParameter.path and QualifiedNode.path. 
+• contents    [1] FunctionContents    OPTIONAL 
+see Function.contents 
+• children    [2] ElementCollection   OPTIONAL 
+see Function.children 
+ 
+FunctionContents 
+• identifier       [0] EmberString         OPTIONAL 
+The object identifier. Analogical to Parameter.identifier and Node.identifier. 
+• description      [1] EmberString         OPTIONAL 
+The display name of the Function object. Analogical to Parameter.description and 
+Node.description. 
+• arguments        [2] TupleDescription     OPTIONAL 
+Describes the arguments the function takes with name and type. If not present, the 
+function does not take any arguments. 
+• result           [3] TupleDescription     OPTIONAL 
+Describes the return value of the function, which is a tuple of arbitrary length and type. 
+• templateReference [4] RELATIVE-OID     OPTIONAL 
+Refers to a template defining the default structure of this element. 
+ 
+ 
+TupleItemDescription 
+• type     [0] P 
+The type of the argument. Only primitive types are supported. 
+• name     [1] EmberString            OPTIONAL 
+The name of the argument. May be omitted if the function only takes one argument. 
+ 
+Invocation 
+• invocationId    [0] Integer32       OPTIONAL 
+An integer number generated by the consumer and repeated by the provider in the 
+InvocationResult. Used by the consumer to relate InvocationResults to Invocations. 
+• arguments       [1] Tuple           OPTIONAL 
+The values of the arguments as described in Function.arguments. 
+ 
+InvocationResult 
+• invocationId    [0] Integer32 
+--- Page 48 ---
+Ember+ protocol specification        Lawo GmbH 
+49 
+The invocation id originally issued by the consumer in the invoke command. 
+• success         [1] BOOLEAN         OPTIONAL 
+True or omitted if the provider did not encounter any errors while executing the function. 
+• result          [2] Tuple           OPTIONAL 
+The return value of the function call. The values in this tuple must match the description 
+given in FunctionContents.result. 
+ 
+ 
+ 
+Use Cases 
+The following use cases are illustrated as XML samples (Glow is easily transposed to XML). 
+Transmission of the Function Description 
+ 
+Consumer -> Provider: 
+<QualifiedNode path="1.2"> 
+  <children> 
+    <Command number="32" /> 
+  </children> 
+</QualifiedNode> 
+This message requests all children under the node with path “1.2”. 
+Provider -> Consumer: 
+<QualifiedNode path="1.2"> 
+  <children> 
+    <Function number="1"> 
+      <contents> 
+        <identifier>setObjectNameRecursive</identifier> 
+        <description>Sample Function</description> 
+        <arguments> 
+          <TupleItemDescription type="INTEGER" name="objectId" /> 
+          <TupleItemDescription type="BOOLEAN" name="isRecursive" /> 
+          <TupleItemDescription type="UTF8" name="newName" /> 
+        </arguments> 
+        <result> 
+          <TupleItemDescription type="integer" name="changeCount" /> 
+        </result> 
+      </contents> 
+    </Function> 
+  </children> 
+</QualifiedNode> 
+This message reports one child under the requested node: a Function with three arguments (int 
+objectId, bool isRecursive, string newName) and returning the number of changes committed by 
+calling the function. 
+ 
+--- Page 49 ---
+Ember+ protocol specification        Lawo GmbH 
+50 
+Invocation of Functions 
+ 
+Consumer -> Provider: 
+<QualifiedFunction path="1.2.1"> 
+  <children> 
+    <Command number="33"> 
+      <invocation invocationId="1"> 
+        <arguments> 
+          <Value type="INTEGER">123</Value> 
+          <Value type="BOOLEAN">True</Value> 
+          <Value type="UTF8">Herbert</Value> 
+        </arguments> 
+      </invocation> 
+    </Command> 
+  </children> 
+</QualifiedFunction> 
+This message issues a recursive rename of all objects beneath object 123. 
+Provider -> Consumer: 
+<InvocationResult invocationId="1"> 
+  <result> 
+    <Value type="INTEGER">74</Value> 
+  </result> 
+</InvocationResult> 
+This message reports that 74 objects have been changed through invocation with id 1. 
+ 
+  
+--- Page 50 ---
+Ember+ protocol specification        Lawo GmbH 
+51 
+Ember+ 1.3: Schema Extensions 
+ 
+Purpose 
+The purpose of schema definitions is to provide a way for automated systems to extract formal 
+type information for sub9trees within an Ember+ tree, without having to rely on structural 
+subtyping. With type information readily available, a consumer may provide high level 
+functionality utilizing the identifiable parts of the tree on otherwise unknown Ember+ trees.  
+In contrast to specialized extensions of the Ember+ DTD for certain domains, schemas have the 
+advantage that they may be defined ad hoc by the implementer of an Ember+ provider without 
+obstructing the utility of the data for consumers that have no specialized knowledge of the 
+schema in question. 
+ 
+Identification within an Ember+ Tree 
+Schema identifiers may occur anywhere within an Ember+ tree as part of a node, as part of a 
+parameter or as part of a matrix definition. A schema identifier is a string that refers to a schema 
+using reverse domain name notation (e.g. de.l-s-b.emberplus.schema1).  
+Nodes, parameters and matrices may comply with multiple schemas, as long as these schemas 
+do not define conflicting identifiers. 
+  
+Formally the schema identifier must conform to the syntax rules specified in RFC1035, section 
+2.3.1, while explicitly disregarding the extensions specified in RFC2673 and RFC4343. In 
+addition, the following restriction is made with regard to the syntax rules specified in RFC1035: 
+<letter> ::= "a" | ... | "z" 
+ 
+Scope 
+When a schema identifier is encountered within an Ember+ tree its scope spans the entire 
+sub9tree rooted at the element, as part of which the schema identifier is encountered, although 
+a schema definition is free to restrict the scope as it sees fit. A schema definition is not allowed 
+to extend the scope beyond the sub9tree to siblings or parents of the element, as part of which 
+the schema identifier is encountered.  
+ 
+Schema definition 
+The means through which a schema is defined is up to the implementer. It should formally and 
+unambiguously define the schema, by  
+1. Defining to which type of element the schema may be applied.  
+2. Constraining the set of direct or indirect children that may or must appear below the 
+element to which the schema applies.  
+--- Page 51 ---
+Ember+ protocol specification        Lawo GmbH 
+52 
+3. Formally describing the meaning of certain parameters within the application domain, to 
+which the sub-tree relates  
+4. Referring to other schemas to which certain child9elements must conform.  
+This list is of course non exhaustive and any means required to properly describe the schema 
+are acceptable.  
+Even though it is valid for a schema definition to restate certain constraints that may also be 
+expressed using the means provided by the Ember+ DTD, a schema must not be used to 
+obsolete or omit such information, because even in the presence of schemas generic Ember+ 
+consumers that have no further knowledge of a specific schema must not be hindered in their 
+correct operation.  
+  
+Examples of this are:  
+• Even if a schema definition specifies a valid min/max range for a certain parameter the 
+minimum and maximum attributes must still be set accordingly.  
+• Even if a schema definition specifies how an internal value has to be formatted for 
+presentation purposes the formula attribute must still be set accordingly.  
+ 
+Application Notes 
+• A node governed by a schema application is always allowed to contain more parameters 
+or children than those specified in the schema definition, as long their presence is not 
+explicitly forbidden.  
+• Commands do not allow the application of a schema, because commands are 
+considered standard operations that are mandated and defined by the Ember+ protocol 
+specification.  
+• Functions do not allow the application of a schema, because they are considered 
+operations within the context of their parent node (like methods in an object oriented 
+context) and are thus to be defined as part of a schema, whose application governs their 
+parent element.  
+• If future extensions to a schema definition are likely, we suggest post-fixing the schema 
+identifier with a version identifier such as .vXXXX.YYYY. Where XXXX denotes the major 
+version number and YYYY denotes the minor version number, the latter of which may be 
+omitted. Changes in the minor version number are expected to be backwards 
+compatible, whereas a different major version number must be considered incompatible 
+by consumers that are not aware of the number encountered. 
+ 
+Syntax of Schema Identifiers 
+This BNF is taken from RFC1035 with the modification mentioned above, and modified to not 
+allow a single space character as an empty schema identifier. 
+<schema-ident> ::= <label> | <schema-ident> "." <label> 
+<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ] 
+<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str> 
+--- Page 52 ---
+Ember+ protocol specification        Lawo GmbH 
+53 
+<let-dig-hyp> ::= <let-dig> | "-" 
+<let-dig> ::= <letter> | <digit> 
+<letter> ::= "a" | ... | "z" 
+<digit> ::= "0" | ... | "9" 
+References 
+• RFC1035: Domain names – implementation and specification 
+http://tools.ietf.org/html/rfc1035 
+• RFC2673: Binary Labels in the Domain Name System 
+http://tools.ietf.org/html/rfc2673 
+• RFC4343: Domain Name System (DNS) Case Insensitivity Clarification 
+http://tools.ietf.org/html/rfc4343 
+  
+--- Page 53 ---
+Ember+ protocol specification        Lawo GmbH 
+54 
+Ember+ 1.4: Templates 
+ 
+Purpose 
+Ember+ trees often consist of hierarchical sets of structurally equivalent elements or sub-trees. 
+While the Ember+ Schema extension introduced in Glow DTD v2.30 allows easy identification of 
+certain sub-trees through a form of typing, it does nothing to address the excessive redundancy 
+of data inherent in such structures, which, when such trees are traversed at session initiation 
+time, burdens consumer and providers alike. 
+The purpose of templates described in this extension is to provide a way for providers to largely 
+reduce these redundancies by means of defining templates holding a common set of 
+parameters, attributes and even sub-trees as parts of the Ember+ tree, which then can be 
+referred to by other elements, allowing the provider to only communicate differences to the 
+referred template element in descriptive messages or value changed notifications. 
+ 
+Specification within an Ember+ tree 
+Template definitions 
+Template definitions may occur anywhere within an Ember+ tree, provided that the context, in 
+which a template definition appears is also a valid context for the type of element it describes. 
+Being an element in the Ember+ nomenclature, a template may describe the structure of a 
+parameter, a node, a matrix, or a function. It may not describe a command, since commands 
+are a fixed set of operations issued by a consumer and do not serve descriptive purposes within 
+a tree offered by the provider. 
+ 
+Scope 
+The scope of a template definition spans the entire sub-tree spanned by the immediate root 
+node, below which the template definition is encountered and does not extend to other root 
+nodes nested within this sub-tree. 
+ 
+Template references 
+An element may refer to a template definition by means of the newly introduced 
+templateReference attribute that is part of the elements Contents. The value of this attribute 
+must be a relative OID relative to the immediate root node common to the template definition 
+and the element referring to it. 
+The template can be queried with the GetDirectory command, just like any other element. 
+However, when a consumer queries a template, the provider must report the entire template 
+structure.  
+ 
+  
+--- Page 54 ---
+Ember+ protocol specification        Lawo GmbH 
+55 
+Restrictions, semantics and precedence 
+ 
+Template identity 
+The number of a template is the number of its contained element definition. While it might be 
+convenient to consider a reference to a template as a “copying the template definition into the 
+referring node”, this interpretation is incorrect, which results in the constraint that a template 
+definition nested within another template definition exists only once in a tree and may only be 
+referred to by the path leading to its original, explicit definition. 
+ 
+Acyclicality 
+The contents of a template definition can be any definition of the abovementioned element 
+types, which may also include nested template definitions as well as references to other 
+templates, with the only restriction being, that the directed template dependency graph of a 
+template definition must be acyclic. For the sake of this cyclicality check a template is 
+considered defined, once its Template element has been encountered, even though its Number, 
+which gives the template a referable label, is actually nested within. 
+ 
+Type equality 
+The types of the referred template and the referring element must be the same. 
+ 
+Constness 
+A template definition has to remain constant over the course of a session. That means, that: 
+1. Subsequent traversals of the template definition must not report differing contents. 
+2. No value change notifications must be emitted for template elements. 
+On the other hand a template reference reported by a node must not change over the course of 
+a session. 
+ 
+Semantics 
+When an element refers to a template definition it subsumes the contents of the referred 
+template element with the exception of nested template definitions, as mentioned above. For an 
+element governed by a template reference1 all attributes are optional as long as all attributes 
+that are declared as required by the DTD are contained in the union of the provided as part of 
+the template definition and the attributes explicitly provided by the element. 
+If the provider explicitly enumerates an element, governed by a template definition, the attribute 
+Number is required. 
+ 
+1 An element is said to be “goberned by a template reference” if it either contains a tem plateReference attribute, or one of its parent nodes refers to a 
+template that defines a child elemt at the same location.  
+--- Page 55 ---
+Ember+ protocol specification        Lawo GmbH 
+56 
+Precedence 
+When an element enumerates an attribute or child element during traversal or sends a value 
+changed notification over the course of a session, the reported values take precedence over the 
+corresponding values contained in the template definition. 
+The attributes or child elements enumerated or changed by an element need not be a subset of 
+the contents of the template. 
+ 
+GetDirectory requests 
+It is at the direction of the consumer whether or not it wants to utilize the bandwidth-saving 
+capabilities of template definitions and references. Therefor the semantics of the already 
+defined explicit dirFieldMask values remain unchanged. Most importantly a provider must 
+enumerate all contents of an element, regardless of their redundancy with regard to a referred 
+template, when the consumer requests All (-1) element contents. This extension introduces a 
+new dirFieldMask value that explicitly requests non-redundant content enumeration. It is named 
+Sparse and is signified by the value -2. 
+ 
+Compatibility and migration 
+This extension will introduce a new version of the Glow DTD, which is why compatibility for this 
+extension must be indicated by reporting the corresponding version in the AppBytes field of the 
+initial S101 frame. A provider may assume this version to be constant and disregard version 
+changes in later frames. 
+ 
+Provider migration 
+Migration of a provider is simple, as the semantics of tree elements, as well as the GetDirectory 
+command remain unchanged if a tree does not contain template definitions or template 
+references. In this case the new dirFieldMask value Sparse is equivalent to All, which also 
+implies unchanged semantics of the value Default. 
+ 
+Consumer migration 
+A consumer that is not yet fully compatible with templates can implement a minimal support 
+strategy that makes it compatible without any major changes to its internal model. Since the 
+dirFieldMask value All retains its old semantics and is equivalent to the old Default value. So all 
+a consumer has to do is to: 
+1. Always use All as the dirFieldMask in GetDirectory requests. 
+2. Discard all Template definitions or references encountered as part of a response to a 
+GetDirectory request. 
+ 
+  
+--- Page 56 ---
+Ember+ protocol specification        Lawo GmbH 
+57 
+Changes to the Ember+ DTD 
+ 
+The following two types will be added to the DTD: 
+ 
+Template ::= 
+ [APPLICATION 24] IMPLICIT SET { 
+           Number    [0] Integer32 
+  Element   [1] TemplateElement 
+           Description [2] EmberString 
+ } 
+ 
+QualifiedTemplate ::= 
+ [APPLICATION 25] IMPLICIT SET { 
+           Path    [0] RELATIVE-OID 
+  Element   [1] TemplateElement 
+           Description [2] EmberString 
+ } 
+ 
+TemplateElement ::= 
+ CHOICE { 
+  parameter Parameter, 
+  node  Node, 
+  matrix Matrix, 
+  function Function 
+ } 
+ 
+The types listed below contain changes: 
+ 
+Element ::= 
+ CHOICE { 
+  parameter Parameter, 
+  node  Node, 
+  command Command, 
+  matrix Matrix, 
+  function Function, 
+  template Template 
+ } 
+ 
+RootElement ::= 
+    CHOICE { 
+        element            Element, 
+        qualifiedParameter QualifiedParameter, 
+        qualifiedNode      QualifiedNode, 
+        qualifiedMatrix    QualifiedMatrix, 
+        qualifiedFunction  QualififedFunction 
+        qualifiedTemplate  QualifiedTemplate 
+    } 
+--- Page 57 ---
+Ember+ protocol specification        Lawo GmbH 
+58 
+ 
+ParameterContents ::= 
+ SET { 
+  -- Attributes … 
+  schemaIdentifiers [17] EmberString OPTIONAL, 
+  templateReference [18] RELATIVE-OID OPTIONAL 
+ } 
+ 
+NodeContents ::= 
+ SET { 
+  -- Attributes … 
+  schemaIdentifiers [4] EmberString OPTIONAL, 
+  templateReference [5] RELATIVE-OID OPTIONAL 
+ } 
+ 
+MatrixContents ::= 
+ SET { 
+  -- Attributes … 
+  schemaIdentifiers [11] EmberString OPTIONAL, 
+  templateReference [12] RELATIVE-OID OPTIONAL 
+ } 
+ 
+ 
+FunctionContents ::= 
+ SET { 
+  -- Attributes … 
+  result   [3] TupleDescription OPTIONAL, 
+  templateReference [4] RELATIVE-OID OPTIONAL 
+ } 
+ 
+FieldFlags ::= 
+ INTEGER { 
+  sparse  (-2),  
+  all   (-1), 
+  default  ( 0), 
+  identifier  ( 1), 
+  description ( 2), 
+  tree   ( 3), 
+  value   ( 4), 
+  connections ( 5), 
+ } 
+  
+--- Page 58 ---
+Ember+ protocol specification        Lawo GmbH 
+59 
+Ember+ usage 
+With the object types defined in the previous chapter it is now possible to represent a piece of 
+hardware, for example a frame controller which has one or two power supplies and ten slots for 
+different kinds of cards. All types mentioned before are available in the Ember library, what 
+makes it intuitive and easy to use. This chapter describes how devices are being represented in 
+Glow. 
+ 
+Representing a device 
+A common device is represented by using the Node and the Parameter type. Each node may 
+have any number of child nodes and parameters, while a parameter may not have child nodes 
+or parameters – although the specification technically allows it since the Children property is of 
+type ElementCollection. But this property should only be used by a consumer to attach a 
+command to the parameter, like Subscribe or Unsubscribe. 
+ 
+The sample frame provides several parameters, which are listed in the table below. 
+ 
+Identifier Type Properties 
+Power Supply 1 Integer (Enumeration) 
+• Value 
+• Enumeration 
+• Description 
+• Identifier 
+Power Supply 2 Integer (Enumeration) 
+• Value 
+• Enumeration 
+• Description 
+• Identifier 
+Software Version String 
+• Value 
+• Description 
+• Identifier 
+IP Address String 
+• Read/Write 
+• Value 
+• Description 
+• Identifier 
+Network Mask String 
+• Read/Write 
+• Value 
+• Description 
+• Identifier 
+ 
+This is a simplification and only a subset of the parameters a device usually offers, but it is 
+enough to show how this structure would look like when using Glow. The easiest approach 
+would be to create a Node representing the device and then to append all parameters to it. This 
+--- Page 59 ---
+Ember+ protocol specification        Lawo GmbH 
+60 
+would work but the Node type is not restricted to representing physical entities, it may also be 
+used for logical entities, like a category.  
+ 
+ 
+ 
+This design separates the parameters into three categories: Status, System Info and Network. 
+These names are also the node identifiers. In most cases, the benefit is that the user will find 
+the parameter it is looking for faster. A consumer may also use this information for the layout of 
+its user interface. In bigger systems with hundreds or even thousands of parameters the use of 
+nodes in order to categorize parameters also reduces the message sizes and reduces the CPU 
+load of the data provider since it doesn’t have to encode a large parameter set at once. Instead, 
+it only has to transmit the parameters of the node the user or a control system is currently 
+interested in.  
+ 
+Querying a data provider 
+When a consumer connects to a provider it usually requests the structure of the device. This 
+can be done by using the GetDirectory command, which has to be sent for every node the 
+consumer is interested in. 
+ 
+Basic data exchange 
+The initial data exchange would look like this: 
+Device 
+Status 
+ System Info 
+ Network 
+Power Supply 1 
+Power Supply 2 
+Version 
+ IP Address 
+Mask 
+Node 
+Parameter 
+--- Page 60 ---
+Ember+ protocol specification        Lawo GmbH 
+61 
+ 
+ 
+The consumer sends a GetDirectory request (which must be the child element of the root 
+element collection) to the provider, which responds with another ElementCollection containing 
+the root node “Device” with Number 1 (written within the parentheses) and its description. 
+To query the child elements of the device node, the consumer must create a message that 
+contains the device node and append a GetDirectory command to the Children property of that 
+node. The provider then responds with the device node and all of if children.  
+When the consumer is interested in the child elements of the “System Info”, it would send the 
+following request: 
+ 
+(1) Device 
+Command 
+Node 
+Parameter 
+GetDirectory (32) 
+ 
+(1) Device 
+GetDirectory (32) 
+(2) Status 
+(1) System Info 
+(3) Network 
+(1) Device 
+ 
+  
+--- Page 61 ---
+Ember+ protocol specification        Lawo GmbH 
+62 
+ 
+ 
+The consumer appends the “GetDirectory” command to the node it wants the get the children 
+from, in this case “System Info”. The data provider then responds with the same structure, but 
+appends the child nodes and parameters, if there are any. When a provider reports parameters 
+due to a “GetDirectory” request, it must include all relevant properties. That way a consumer 
+can query the complete structure of any data provider.  
+ 
+Changing a parameter value 
+When a consumer has received the structure of a provider, a user or a control-system now has 
+the possibility to modify the writeable values of the parameters available. There is no additional 
+command required in order to change a parameter. Basically, the consumer only has to send 
+the value that should be changed to the provider. The small sample structure used before has 
+two writeable parameters: IP Address and Network Mask.  
+ 
+Please note that the consumer could lose its connection to the provider when it changes the IP 
+Address and uses TCP/IP or UDP as transport layer. This example is for demonstration 
+purposes.  
+ 
+The consumer must transmit the structure containing the parameter it wants to change, and 
+finally the value to set the parameter to. When a provider receives a value change request, it 
+(1) Device 
+Command 
+Node 
+Parameter 
+(1) Device 
+GetDirectory (32) 
+(1) System Info 
+ 
+  
+(1) System Info 
+(1) Power Supply 1 
+(2) Power Supply 2 
+--- Page 62 ---
+Ember+ protocol specification        Lawo GmbH 
+63 
+must evaluate the new value. If it is valid the provider must apply the requested change and 
+respond with the new value. Otherwise, if the value received is invalid for some reason, the 
+provider should discard the request and respond with the current value, even if it doesn’t 
+change. The following sample shows how a value change request looks like.  
+ 
+ 
+ 
+Note: In the examples above, the messages from the provider contain only normal elements 
+(e.g. nodes and parameters). A provider is however free to instead send messages with the 
+qualified variants of these elements or even a combination of normal and qualified elements. 
+Vice versa, requests issued by the consumer can also contain any combination of normal and 
+qualified elements. 
+  
+Property 
+Node 
+Parameter 
+(1) Device 
+ 
+  
+(3) Network 
+(1) Mask 
+„255.255.255.0“ 
+(3) Network 
+(1) Mask 
+(1) Device 
+„255.255.255.0“ 
+The device accepts 
+the value request, 
+so it confirms it by 
+replying with the 
+updated value. 
+--- Page 63 ---
+Ember+ protocol specification        Lawo GmbH 
+64 
+The EmBER library 
+The implementation of the EmBER library is written in standard C++ 03 and has been tested on 
+several different compilers (MSVC++, g++) and platforms (Windows, Mac OS X). This section 
+describes the different layers of the library and how to use it. 
+The library has been designed to work on most embedded systems as well.  
+Compiling the library 
+The library can be built with any C++ 03 standard compliant compiler. There are two variants, it 
+may either be compiled or used as library, or it can be used header-only, which means that an 
+application only includes the necessary headers. 
+To use the library as header-only, define the “LIBEMBER_HEADER_ONLY” macro before 
+including the header file(s): 
+ 
+#define LIBEMBER_HEADER_ONLY 
+#include “ember/Ember.hpp” 
+ 
+// … 
+ 
+A premake file is provided with the library which can be used to compile the source code when 
+not using the header-only variant. For more information, please visit: 
+http://industriousone.com/premake 
+ 
+Including the library 
+Each layer/namespace provides a convenience header, which should be used instead of 
+including the files separately. If all layers are being used, the file “Ember.hpp” can be included. 
+Otherwise, the files listed in the table below can be used: 
+ 
+Namespace File 
+ber “ber/Ber.hpp” 
+dom “dom/Dom.hpp” 
+glow “glow/Glow.hpp” 
+ 
+Library structure 
+The library has been divided into four different layers, as listed in the table below. 
+ 
+Util 
+The util namespace contains several helper classes and macros, especially the 
+TypeErasedIterator and the OctetStream. 
+--- Page 64 ---
+Ember+ protocol specification        Lawo GmbH 
+65 
+ 
+BER 
+The BER layer is the low level layer which provides the basic encoding and decoding 
+routines for all data types supported, including the length type and the tag. The 
+implementation uses traits classes in order to provide the encoding and decoding 
+algorithms. That way it is easy to extend the library by additional data types. 
+Dom 
+The Dom layer provides the classes that are used to build an encodable data structure.  
+Glow 
+The Glow layer is based on the Dom layer and provides classes for each object type 
+defined by the Glow specification, like GlowNode, GlowParameter, GlowCommand and 
+GlowElementCollection. 
+ 
+ 
+The util namespace 
+The util namespace contains some macros and helper classes which are used all over the 
+library, like the TypeErasedIterator and the StreamBuffer. The iterator class is used by the 
+container classes implemented in the dom and glow namespace and allows to traverse the 
+children of a container. The StreamBuffer is used by the encoding and decoding functions. The 
+StreamBuffer uses a singly linked list where each node allocates a fixed size chunk. 
+The BER namespace 
+As mentioned in the introduction, this namespace contains the encoding and decoding 
+functions. It also provides classes for the Tag, the Length and a generic Value.  
+To encode a value, for example an integer, its universal tag and the encoded length must be 
+known. The universal tag contains the type information, for an integer this would be “Universal - 
+2”. All universal types are enumerated in the Type class (see ember/ber/Type.h).  
+The following example demonstrates how a value is being encoded. 
+ 
+       
+util::OctetStream stream; 
+ber::Tag const appTag = ber::make_tag(ber::Class::Application, 1); 
+ 
+int const intValue = 1333; 
+std::size_t const frameLength = ber::encodedFrameLength(intValue); 
+  
+ber::encode(stream, appTag); 
+ber::encode(stream, ber::make_length(frameLength)); 
+ber::encodeFrame(stream, intValue); 
+ 
+ 
+The output buffer contains the following encoded bytes: 
+ 
+--- Page 65 ---
+Ember+ protocol specification        Lawo GmbH 
+66 
+0x41 Application Tag “Application-1” 
+0x04 Inner Frame Length, 4 Bytes 
+0x02 Type Tag “Universal-2” (integer) 
+0x02 Data Length, 2 Bytes 
+0x05 0x35 Encoded value, 1333 
+ 
+To decode this data, the following sample can be used: 
+ 
+appTag = ber::decode<ber::Tag>(stream); 
+frameLength = ber::decode<ber::Length<int>>(stream); 
+universalTag = ber::decode<ber::Tag>(stream); 
+length = ber::decode<ber::Length<int>>(stream).value; 
+intValue = ber::decode<int>(stream, length); 
+ 
+This example is very basic and only demonstrates the basic use of the library and how the 
+encoded result looks like.  
+In a real world example, it would be better to use the DecoderFactory class instead. It decodes 
+a set of type, length and value and returns an instance of the type-erased Value class. 
+The Dom namespace 
+The Dom namespace offers a set of classes that can be used to create an encodable structure. 
+A programmer using these classes does not have to have detailed knowledge about the 
+encoding and decoding rules.  
+ 
+The namespace also contains two classes called DomReader and NodeFactory. The 
+DomReader is used to decode a buffer which contains a complete tree. Additionally, it may be 
+used to decode data which uses application defined types, like the ones used in the Glow 
+specification. This is why the reader requires an instance of a NodeFactory, which is an abstract 
+class responsible for creating concrete objects. It is always being called by the reader when it 
+detects an application defined object. 
+The Glow namespace 
+The classes inside this namespace are built upon the dom classes. They represent the object 
+types used by the Glow specification. The classes within this namespace allow it to easily 
+construct a valid Glow message and they can also be used to traverse a decoded ember 
+message.  
+  
+--- Page 66 ---
+Ember+ protocol specification        Lawo GmbH 
+67 
+Using the glow classes  
+This section briefly demonstrates the use of the Glow classes by providing some simple 
+examples. 
+ 
+Creating a GetDirectory request 
+ 
+The first example shows how to generate a GetDirectory request at root level. 
+ 
+root = GlowRootElementCollection::create(); 
+ 
+// The create method returns a collection with the application tag 
+// set to GlowTags::Root. 
+ 
+new GlowCommand(root, CommandType::GetDirectory); 
+ 
+// Encode and transmit 
+// … 
+ 
+The next example shows how to query the children of a specific node. It uses the small example 
+from the previous chapters. This snippet queries the children of the Network node. The 
+complete path up to the node that is being queried must be provided, but it is sufficient to add 
+the node numbers. The last node then contains the GetDirectory command as child element. 
+ 
+root = new GlowRootElementCollection::create(); 
+device = new GlowNode(1); 
+network = new GlowNode(3); 
+ 
+command = new GlowCommand(CommandType::GetDirectory); 
+ 
+root->insert(root->end(), device); 
+device->children()->insert(device->children()->end(), network); 
+network->children()->insert(network->children()->end(), command); 
+ 
+It is also possible to query several nodes within one message. A consumer could construct a 
+single tree with all known nodes and append a GetDirectory command to each of them. 
+Replying to a GetDirectory request 
+When a provider receives a valid GetDirectory request it must respond with all nodes that 
+belong to the one being queried. In our example, the network node contains two parameters, IP 
+Address and Mask. So the response to the previous query would look like this: 
+ 
+root = GlowRootElementCollection::create(); 
+device = new GlowNode(1); 
+network = new GlowNode(3); 
+ 
+ipAddress = new GlowParameter(1); 
+ipAddress->setValue(currentIpAddress); 
+ipAddress->setAccess(Access::ReadWrite); 
+ipAddress->setIdentifier(“ipaddr”); 
+ipAddress->setDescription(“IP Address”); 
+--- Page 67 ---
+Ember+ protocol specification        Lawo GmbH 
+68 
+ 
+mask = new GlowParameter(2); 
+mask->setValue(currentMask); 
+mask->setAccess(Access::ReadWrite); 
+mask->setIdentifier(“netmask”); 
+mask->setDescription(“Network Mask”); 
+ 
+root->insert(root->end(), device); 
+device->children()->insert(device->children()->end(), network); 
+network->children()->insert(network->children()->end(), ipAddress); 
+network->children()->insert(network->children()->end(), mask); 
+ 
+This way a message is being created which contains the current state of the parameters and 
+their description. 
+ 
+Changing a parameter value 
+When a consumer wants to change a parameter value, it has to provide the partial tree and the 
+new value. The following sample shows how a change network mask request looks like. 
+ 
+root = GlowRootElementCollection::create(); 
+device = new GlowNode(1); 
+network = new GlowNode(3); 
+ 
+mask = new GlowParameter(2); 
+mask->setValue(“255.255.252.0”); 
+ 
+root->insert(root->end(), device); 
+device->children()->insert(device->children()->end(), network); 
+network->children()->insert(network->children()->end(), mask); 
+ 
+This is it. When a provider detects a parameter containing a value, it must treat this value as 
+value change request.  
+ 
+Reporting a parameter value change 
+When a provider receives a value change request or changes a value for some other reason, it 
+must report the change to all connected clients. The response to the previous example looks 
+like this: 
+ 
+root = GlowRootElementCollection::create(); 
+device = new GlowNode(1); 
+network = new GlowNode(3); 
+ 
+mask = new GlowParameter(2); 
+mask->setValue(currentMask); 
+ 
+root->insert(root->end(), device); 
+device->children()->insert(device->children()->end(), network); 
+network->children()->insert(network->children()->end(), mask); 
+--- Page 68 ---
+Ember+ protocol specification        Lawo GmbH 
+69 
+ 
+When the consumer transmits a valid value, the response should always look like the request. If 
+the value provided by the consumer is invalid, the provider answers with the current value.  
+ 
+Reporting a nullable parameter 
+When a parameter shall be nullable, it must follow the rules mentioned in the section describing 
+the parameter properties. 
+ 
+GlowParameter *parameter = new GlowParameter(1); 
+ 
+// The parameter must set the default value to null and it must report the type it 
+// has when a value is present. 
+parameter->setIdentifier(“parameter”); 
+parameter->setDefault(ber::Null()); 
+parameter->setType(ParameterType::Integer); 
+parameter->setValue(5); 
+ 
+// ... 
+ 
+Checking for a null value 
+// parameter is of type GlowParameterBase const*. 
+ 
+// Check, if a value is set 
+ 
+if (parameter->contains(ParameterProperty::Value) 
+{ 
+    GlowValue value = parameter->value(); 
+ 
+    switch (value.type()) 
+    { 
+        case ParameterType::None: 
+            // Handle null value 
+            // … 
+    } 
+} 
+ 
+Reporting a template 
+When a provider wants to report a template, it must report the entire structure when the 
+template is being queried. The following sample shows how to construct a qualified template 
+which contains a node and a parameter: 
+ 
+ObjectIdentifier path; 
+// Initializes the path ... 
+ 
+GlowQualifiedTemplate* template = new GlowQualifiedTemplate(path); 
+ 
+// Create the structure of the templated node. The makeNode method automatically 
+// sets the corrent tag for the template element. This is only used for the root  
+// element. 
+GlowNode* node = template->makeNode(1); 
+--- Page 69 ---
+Ember+ protocol specification        Lawo GmbH 
+70 
+node->setDescription(“gain”); 
+ 
+GlowParameter* parameter = new GlowParameter(1); 
+parameter->setIdentifier(“value”); 
+parameter->setValue(0.0); 
+parameter->setMinimum(-128.0); 
+parameter->setMaximum(32.0); 
+ 
+node->children()->insert(node->children()->end(), parameter); 
+ 
+template->setDescription(“template”); 
+template->setElement(node); 
+ 
+// Add the template to a root element collection and report it. 
+ 
+ 
+In the C library, a callback is used to write the template content: 
+ 
+void writeTemplateElement( 
+    GlowOutput *pOut, 
+    const GlowTemplate *pTemplate, 
+    const BerTag *elementTag) 
+{ 
+    GlowFieldFlags fields =  
+        GlowFieldFlags_Identifier | 
+        GlowFieldFlags_Value | 
+        GlowFieldFlags_Minimum | 
+        GlowFieldFlags_Maximum; 
+    GlowNode node; 
+    GlowParameter parameter; 
+    bzero(node); 
+    bzero(parameter); 
+     
+    node.pDescription = “gain”; 
+    parameter.pIdentifier = “value”; 
+    parameter.value.flag = GlowParameterType_Real; 
+    parameter.value.choice.real = 0.0; 
+    parameter.minimum.flag = GlowParameterType_Real; 
+    parameter.minimum.choice.real = -128.0; 
+    parameter.maximum.flag = GlowParameterType_Real; 
+    parameter.maximum.choice.real = 32.0; 
+ 
+    glow_writeTemplateElementNodeBegin( 
+        pOut, 
+        elementTag, 
+        &node, 
+        GlowFieldFlag_Description,  
+        1); 
+    Glow_writeTemplateElementNodeChildrenBegin(pOut); 
+    { 
+        glow_writeTemplateElementParameter(pOut, NULL, &parameter, fields, 1); 
+    } 
+    Glow_writeTemplateElementNodeChildrenEnd(pOut); 
+    Glow_writeTempalteElementNodeEnd(pOut); 
+} 
+ 
+ 
+  
+--- Page 70 ---
+Ember+ protocol specification        Lawo GmbH 
+71 
+Traversing a tree 
+Both, the consumer and the provider must traverse a tree when they receive it. In both cases, 
+the procedure is very similar. This section demonstrates how a provider may traverse a tree. 
+The sample covers Nodes, Commands and Parameters. 
+ 
+void traverseChildren(GlowElementCollection& collection) 
+{ 
+   GlowElementCollection::iterator it = collection.begin(); 
+   GlowElementCollection::iterator last = collection.end(); 
+ 
+   for(; it != last; ++it) 
+   { 
+      dom::Node& node = *it; 
+ 
+      // Converts the node’s type tag into a ber type. That makes it easier 
+      // to determine if this is an application defined type. 
+      ber::Type type = ber::Type::fromTag(node.typeTag()); 
+ 
+      if(type.isApplicationDefined()) 
+      { 
+         switch(type.value()) 
+         { 
+            case GlowType::Node: 
+               handleNode(dynamic_cast<GlowNode&>(node)); 
+               break; 
+            case GlowType::Parameter: 
+               handleParameter(dynamic_cast<GlowParameter&>(node)); 
+               break; 
+            case GlowType::Command: 
+               handleCommand(dynamic_cast<GlowCommand&>(node)); 
+               break; 
+         } 
+      } 
+   } 
+} 
+ 
+void handleNode(GlowNode& node) 
+{ 
+   // An implementation should validate if the current node  
+   // really exists by checking its number. 
+    
+   // Then, traverse the children – if there are any. 
+   GlowElementCollection* children = node.children(); 
+ 
+   if(children != 0) 
+      traverse(*children); 
+} 
+ 
+void handleParameter(GlowParameter& parameter) 
+{ 
+   // If this is a provider side implementation, the 
+   // provider usually only has to check if a value is set. 
+   // If so, this is a value request that must be handled: 
+--- Page 71 ---
+Ember+ protocol specification        Lawo GmbH 
+72 
+ 
+   if(parameter.contains(ParameterProperty::Value)) 
+   { 
+      // Handle Set-Value request: 
+      handleParameterValue(parameter, parameter.value()); 
+   } 
+ 
+   // On the other side, if this is a consumer implementation, it should check 
+   // the availability of each property and update its internal state. 
+ 
+   if(parameter.contains(GlowProperty::Access)) 
+   { 
+      // modifyAccessparameter, parameter.access() 
+   } 
+ 
+   if(parameter.contains(GlowProperty::Minimum)) 
+   { 
+      // modifyMinimum parameter, parameter.minimum() 
+   } 
+ 
+   // and so on . . .  
+} 
+ 
+  
+--- Page 72 ---
+Ember+ protocol specification        Lawo GmbH 
+73 
+Behaviour rules and other guidelines 
+This chapter lists the general rules a device must follow when it uses the EmBER protocol. 
+Additionally, this chapter provides some samples that demonstrate how a tree should look like – 
+or how it shouldn’t look like. 
+ 
+General behaviour rules 
+ 
+Message length 
+To avoid packets that may be too large for a provider or consumer with lower memory 
+capabilities, the payload size of an Ember+ packet is limited to 1024 bytes. Due to framing 
+overhead, the actual maximum length of an Ember+ packet is 1290 bytes. The Ember+ libraries 
+provide methods to transmit partially encoded data. The framing protocol, which is used to 
+transport the encoded EmBER data, provides a set of flags which are being used to indicate 
+whether the encoded data is only a part of a message or a complete packet. More details about 
+these flags and S101 in general can be found under S101 Messages. 
+The StreamBuffer class from the C++ library for example provides a virtual flush method, which 
+is invoked whenever the buffer reaches its maximum size, which can be determined via a 
+template parameter. When overriding this method, it is possible to encode transmit the current 
+data before the buffer content is being reset.  
+That way, the memory usage is kept low and the data is being written to the clients while the 
+EmBER encoding is in process. 
+On the side, when receiving a partial message that needs to be decoded, the library provides 
+the AsyncDomReader class, which invokes the virtual rootReady method as soon as the 
+decoding is complete. It is possible to derive from that class and override this method in order to 
+process the decoded tree. 
+The identifier property 
+The identifier of a node must never change. Otherwise a consumer cannot refer to a specific 
+node or parameter any more. If, for example, a device has several slots (1-10) which may 
+contain different kinds of modules, there must be one unique identifier for each slot – module 
+combination. So a node called “Slot_01” would not satisfy this requirement. The identifier should 
+additionally contain some module information, like a type identifier or a version. The identifier 
+could then look like “Slot_01_1000_2.0”. 
+The identifier string must not contain the character “/” (ASCII/UTF-8: 47) and must begin with a 
+letter or the lower line character (“a”-“z”, “A”-“Z”, “_”, ASCII/UTF-8: 65-90, 97-122 ,95). 
+  
+The description property 
+--- Page 73 ---
+Ember+ protocol specification        Lawo GmbH 
+74 
+If a node or parameter provides a description property, it shall be displayed instead of the 
+identifier. The identifier is not required to be human readable in a means that it has to make 
+sense for a user.  
+The number property 
+The number is used to quickly identify a node or parameter. Once a consumer knows the 
+structure of a data provider, it should always only provide the node or parameter numbers 
+instead of the string identifier. 
+When to use the element number or identifier 
+Both the provider and the consumer must always include the element (node or parameter) 
+number when transmitting a tree.  
+When a consumer queries the nodes of a provider by using the GetDirectory command, it must 
+provide all attributes of the child elements, including the string identifier.  
+The consumer itself is never required to transmit the identifier. But if it receives an element 
+which contains both, a number and an identifier, the identifier shall be used to map the node to 
+an existing internal structure. This must usually only be done once when the consumer queries 
+the provider for the first time after it established a connection. 
+Keep-Alive mechanism 
+A basic Keep-Alive mechanism can be implemented by using the S101 commands called 
+“Keep-Alive Request” and “Keep-Alive Response”. Both, the provider and the consumer may 
+use the “Keep-Alive Request” command in order to test whether the remote host is still 
+responsive. 
+Though issuing the “Keep-Alive Request” message is optional, any Ember+ host MUST respond 
+to a “Keep-Alive Request” message with a “Keep-Alive Response”. 
+The host sending the “Request-Keep Alive” message determines how long it waits for a 
+response. A recommended timeout is about 5 seconds. The host that issued the keep-alive 
+request may close the connection to the remote machine when the timeout interval expires. The 
+keep-alive request should only be sent when there hasn’t been any kind of communication for a 
+while, like for about 4-5 seconds. For more information, please refer to the chapter S101 
+Messages, which describes the S101 commands. 
+Number of consumers per provider 
+A provider should not limit the number of active client connections to one or two. Most modern 
+control systems run in redundant mode and therefore it may be required that there are several 
+connections active at once. This of course depends on the hardware capabilities of the provider, 
+but it should be considered when designing the remote interface. 
+Notifications 
+Often a device allows several ways to be controlled, not only the remote interface. A second 
+way would be a front panel which allows modifying some parameters. To avoid polling from the 
+--- Page 74 ---
+Ember+ protocol specification        Lawo GmbH 
+75 
+consumer side(s), a provider must always automatically notify its clients about the parameter 
+change. It is only required to inform the clients that have already sent a GetDirectory request to 
+the parent node of the affected parameter. This includes the online/offline state of a node and all 
+properties of a node or parameter. These notifications must not be sent when the parameter has 
+a stream identifier, which indicates that it must be explicitly subscribed. 
+When a parameter value changes, the provider must at least transmit the new value. All other 
+parameter attributes must not necessarily be transmitted. However, they may be transmitted. 
+The change notifications must be transmitted to all clients that are currently connected. 
+Parameter value range changes 
+Although it is possible to change the value range of a parameter it is not recommended. This 
+usually irritates users working with a user interface, especially when the range changes every 
+time when a second parameter has been modified. 
+Value change requests 
+A provider must always respond to a value change request. If the value is invalid, the provider 
+shall respond with the current value.  
+Remarks on the Behaviour of Embedded Devices 
+If an embedded device with very low hardware profile (well below ARM processor) wants to act 
+as an Ember+ provider, it is allowed to transmit its entire static Glow tree once as soon as a 
+client connects – without processing the GetDirectory command at all. So every time the 
+provider accepts a connection from a new consumer, it sends its entire tree to the consumer 
+and from then on only processes parameter updates sent from the consumer. 
+Thus, the binary representation of the static tree may be compiled into the embedded software. 
+This is only allowed for providers which publish a maximum tree depth of 2 and a maximum of 
+32 parameters. These static trees must not contain empty nodes. 
+Removing Sub-Trees at Runtime 
+When a provider wants to notify consumers that a certain sub-tree no longer exists (e.g. if a 
+module was removed at runtime), it should send a notification to all consumers containing the 
+parent node of the removed sub-tree with the property “IsOnline” set to false. 
+From then on the provider no longer includes the removed sub-tree in responses to the 
+GetDirectory command. 
+ 
+General recommendations 
+Separate parameters into logical categories 
+To avoid very large parameter lists it is recommended to introduce logical categories, like 
+“Audio”, “Video”, “Settings”.  
+ 
+--- Page 75 ---
+Ember+ protocol specification        Lawo GmbH 
+76 
+Avoid indexed parameters 
+A router for example often provides a gain parameter for each source or target it has. It is NOT 
+recommended to visualize this by providing a single node which contains all gain parameters 
+with their number in their name. Instead there should be one node for each target or source 
+which has the name of the target (“Target 1”) and then contains a parameter called “Gain”. The 
+table below demonstrates both variants: 
+ 
+Don’t do this Recommended variant 
+▪ Target Gains 
+▪ Gain [0] 
+▪ Gain [1] 
+▪ Gain [2] 
+▪ … 
+▪ Gain [N] 
+▪ Targets 
+▪ Target 1 
+▪ Gain 
+▪ Target 2 
+▪ Gain 
+▪ … 
+ 
+ 
+Interval for stream transmission 
+The recommended interval to transmit streams a consumer has subscribed to is between 50 
+and 80 milliseconds. 
+ 
+Offline trees 
+In several scenarios it is a requirement to store the tree structure of a provider on the consumer 
+side. This might be the case, when a device is not accessible at any time, but its tree is required 
+for some configuration tasks by a consumer (like a control system). 
+For this situation, it is possible to store the device’s tree by querying all data that is required 
+once and then storing it by using an Ember+ encoder or any user defined data format. The tree 
+can then be accessed by the consumer as if the device was connected. It would even be 
+possible to load the data into a kind of Ember+ emulator software. This would allow simulation 
+of value control. 
+But it is important to note that the node numbers and parameters may have changed when 
+reconnecting to the device at a later point of time. So it is important for a consumer to reference 
+nodes by using their string identifiers instead of their number when storing a tree structure for 
+offline use.  
+--- Page 76 ---
+Ember+ protocol specification        Lawo GmbH 
+77 
+Frequently asked questions 
+ 
+This section contains a set of questions that came up during the development of the library and 
+the integration into other projects. 
+ 
+Why are the node and parameter numbers session based? 
+The majority of the providers use a static numbering scheme for its nodes and parameters. This 
+is the case when the hardware is known and doesn’t change. But devices with modular 
+equipment need to dynamically generate node numbers at runtime, for example when a card is 
+being replaced by another card of a different type.  
+  
+--- Page 77 ---
+Ember+ protocol specification        Lawo GmbH 
+78 
+Message Framing 
+In order to transport the EmBER encoded data, an additional framing is required which allows 
+the packets to be transmitted via any transport layer. This task is done by the S101 protocol. 
+From Glow DTD Version 2.50 on, there are two variants of the S101 framing. 
+ 
+By default, the framing which uses an escaping mechanism and a 16-bit CRC shall be used. 
+That way, the contents of a packet can also be validated when being transported over a serial 
+connection. 
+Since the escaping process prevents the possibility to simply copy byte arrays into the target 
+buffer, providers are forced to iterate over each byte to verify if the current bytes needs to be 
+escaped. This results in higher processing time, especially if providers contain image data or 
+many streams which are reported within an array of bytes. 
+The new framing eliminates the need to process each byte. However, since most consumer do 
+not yet support the new framing, it should be avoided where possible. 
+The S101 protocol 
+ 
+The following tables lists all control bytes used in S101. 
+ 
+Name Value Description 
+BOF 0xFE Begin of Frame 
+EOF 0xFF End of Frame 
+CE 0xFD Character escape 
+XOR 0x20 XOR value for Character escape 
+BOFNE | Invalid 0xF8 Within a variant 1 packet, all bytes above or equal to 
+this value must be escaped. 
+Outside of a frame, this byte indicates a variant 2 packet 
+which uses the Non-Escaping version of S101. 
+ 
+Variant 1: Escaping 
+To assure that the start or end byte of the framing doesn’t appear within a message, all bytes 
+with a value equal to or above 0xF8 are being escaped with a special character.  
+ 
+Encoding a message 
+When encoding data, each data byte must be compared against the S101 Invalid value. If the 
+value is below 0xF8, the byte can be appended to the encoding buffer. Otherwise, it must be 
+escaped. This is done by adding the CE (0xFD) character into the stream followed by the 
+original byte XOR’ed with XOR (0x20). Additionally, each message must start with the BOF 
+character and end with the 16 Bit CRC and the EOF character. 
+ 
+--- Page 78 ---
+Ember+ protocol specification        Lawo GmbH 
+79 
+The data 0xFF, 0x00, 0xF9, 0x01 would encode to: 
+0xFE, 0xFD, 0xDF, 0x00, 0xFD, 0xD9, 0x01, 0x95, 0x83, 0xFF 
+ 
+Because 0xFF is above the Invalid character, it will be escaped which results in 0xFD, 0xDF. 
+The same mechanism is applied to 0xF9. The algorithm to compute the CRC is described at the 
+end of this chapter. 
+Decoding a message 
+When a decoder reads a BOF byte, it always indicates the start of a new frame. So the current 
+data can be discarded if there is any. When the decoder receives a CE character, the current 
+byte can be discarded and the next byte must be XOR’ed with 0x20 and then added to the 
+receive buffer. When the decoder reads the EOF, the message is complete and the checksum 
+can be evaluated. 
+ 
+CRC Computation 
+All data bytes are used for the CRC computation. The result is inverted (by applying the binary 
+NOT operator) and the stored after the data bytes and before the EOF. The CRC bytes must 
+also be escaped when they are equal to or above the S101 Invalid byte. 
+The initial value of the CRC is always 0xFFFF. The result of a decoded CRC must always be 
+0xF0B8. The CRC table can be found in the appendix. The following function must be applied to 
+each data byte that is being encoded: 
+ 
+static const WORD table[256] = { . . . }; 
+ 
+WORD ComputeCRC(WORD crc, BYTE byte) 
+{ 
+   return (WORD)((crc >> 8) ^ table[(BYTE)(crc ^ byte)]); 
+} 
+ 
+ 
+Variant 2: Non-Escaping 
+ 
+Encoding a message 
+When encoding a message without escaping, the start byte is simply set to 0xF8, followed by 
+one byte whose lower 3 bits indicate how many bytes are used to specify the payload length. 
+The bits 3 to 7 must be set to zero and are reserved for future use. The payload length consists 
+of zero to seven bytes and is provided in most-significant-byte-first order. The payload itself 
+follows the length bytes and must contain exact as many bytes as specified by the payload 
+length. 
+A message that uses four bytes for the payload length and contains a payload of ten bytes 
+would look like this: 
+ 
+--- Page 79 ---
+Ember+ protocol specification        Lawo GmbH 
+80 
+0xF8, 0x04, 0x00, 0x00, 0x00, 0x0A, [10 Payload Bytes] 
+ 
+ 
+Decoding a message 
+A decoder can easily distinguish between variant 1 or 2 message. If the first byte he receives is 
+0xFE, it is a variant 1 message which uses escaping. If the first byte equals 0xF8, it is a variant 
+two message. All libraries mentioned in this document support both variants. 
+ 
+Determining the supported framing 
+Every provider must support the variant 1 framing which uses the escaping. However, a 
+provider is free to omit some parameters or subtrees if reporting them results in a performance 
+penalty due to the escaping mechanism. 
+To determine if the non-escaping variant is supported, a consumer may send a keep-alive 
+request using the non-escaping format. If the provider replies with the same framing, the non-
+escaping format is supported. If the provider does not send a reply at all or uses the traditional 
+framing, the consumer must use the traditional framing as well since the provider does only 
+support this version.  
+--- Page 80 ---
+Ember+ protocol specification        Lawo GmbH 
+81 
+S101 Messages 
+The payload of all S101 messages starts with the slot identifier, which in this case is usually set 
+to 0x00. The second byte contains the message type, which is set 0x0E for Ember. The third 
+byte determines the command. The meaning of all other appended bytes depends on the 
+command.  
+ 
+Message types 
+0x0E EmBER 
+ The range 0x00 to 0x10 is reserved for internal use. 
+ 
+Commands 
+0x00 EmBER Packet 
+0x01 
+0x02 
+Keep Alive Request 
+Keep Alive Response 
+ 
+ 
+Messages 
+This section describes the format of the available messages. 
+EmBER Packet 
+The EmBER packet command is used whenever a device transmits data encoded with BER. 
+The packet has the following format: 
+ 
+Slot Message Command Version Flags DTD App 
+Bytes <Payload> 
+ 
+ 
+Slot 
+The slot is used to address a kind of sub-device within a device. Right now, this byte should be 
+set to 0x00. 
+Message 
+The message type; set to 0x0E. 
+Command 
+The command determines the content of the following message bytes. Available commands are 
+EmBER (0x00), Keep-Alive Request (0x01), Keep-Alive Response (0x02). 
+When the command is EmBER (0x00), the payload contains an encoded Ember packet. When 
+the command is Keep-Alive Request (0x01), the client (which may be provider or consumer) 
+must response with a Keep-Alive Response (0x02). 
+ 
+--- Page 81 ---
+Ember+ protocol specification        Lawo GmbH 
+82 
+Version 
+Set to 1. 
+ 
+The following fields are only available when the command type is EmBER (0x00). For Keep-
+Alive requests and responses, only Slot, Message type, Command type and Version must be 
+transmitted. 
+Flags 
+The upper three bits of the flags are used to indicate partitioned ember packets. The following 
+table lists the flags and their meaning: 
+ 
+0xC0 Single-packet message 
+0x80 First multi-packet message 
+0x40 Last multi-packet message 
+0x20 Empty packet 
+0x00 A packet within a multi-packet message 
+ 
+DTD 
+The DTD byte defines the “Design Type Document” that is being used. This value must be set 
+to one, which means that the Glow specification is used. 
+App Bytes 
+This field contains the number of bytes that follow before the payload begins. 
+The current version uses two application bytes, which contain the version number of the Glow 
+DTD. 
+Payload 
+The Payload contains the BER-encoded data. This data may be decoded via a BER decoder or 
+the DomReader. 
+Usage 
+The basic header of a non-partitioned single packet message would look like this: 
+ 
+0x00 Device Slot  
+0x0E  Message type: EmBER 
+0x00  Command type: EmBER Packet  
+0x01  Version  
+0xC0  Flags: Single Packet message (First packet | Last packet)  
+0x01  DTD Type: Glow DTD  
+0x02  Application Bytes  
+0x05  Minor Glow DTD Version 
+0x02 Major Glow DTD Version 
+[EmBER Data] 
+ 
+ 
+--- Page 82 ---
+Ember+ protocol specification        Lawo GmbH 
+83 
+Glow DTD ASN.1 Notation 
+This section contains the ASN.1 notation of the Glow specification.  
+ 
+-- 
+-- GlowDtd.asn1 
+-- Lawo GmbH 
+-- 
+-- This file defines the Glow DTD used with the Ember+ protocol. 
+-- 
+-- Change Log: 
+-- 
+-- 2.50: 
+--   - Added nullable parameter values. 
+-- 2.40: 
+--   - NOTE: This version describes the data schema of Ember+ 1.4. 
+--   - Added Template Extensions 
+-- 2.30: 
+--   - NOTE: This version describes the data schema of Ember+ 1.3. 
+--   - Added Schema Extensions 
+-- 2.20: 
+--   - NOTE: This version describes the data schema of Ember+ 1.2. 
+--   - Added Function Extensions (see type Function) 
+-- 2.10: 
+--   - NOTE: This version describes the data schema of Ember+ 1.1. 
+--   - Added Matrix Extensions (see type Matrix) 
+--   - Added "isOnline" field to NodeContents 
+-- 2.5: 
+--   - NOTE: This version describes the data schema of Ember+ 1.0. 
+--   - NOTE: This version introduces breaking changes! 
+--   - Changed Parameter.isCommand (BOOLEAN) to an enumeration named "type". 
+--     To determine the effective type of a parameter, follow this rule: 
+--     - If the parameter has the "type" field that equals "trigger", its  
+--       type is "trigger". 
+--     - If the parameter has either the "enumeration" or the "enumMap" field, 
+--       its type is "enum". 
+--     - If the parameter has the "value" field, its type corresponds to the 
+--       BER type of the value. 
+--     - If the parameter has the "type" field, its type is the value of this 
+--       field. 
+--     This is useful for parameters that do not specify a current value - 
+--     e.g. "trigger" parameters or parameters that have write-only access. 
+--   - Changed Parameter.isWriteable (BOOLEAN) to an enumeration named 
+--     "access". 
+--   - More options for Value - now also supports OCTET STRING and BOOLEAN 
+--   - Introduces QualifiedParameter and QualifiedNode types 
+--   - Introduces RootElement and RootElementCollection types: 
+--     At the root level, a different set of supported types is available. 
+--   - StreamCollection can also be used as root container. 
+--   - Introduces the StreamDescription type and the field "streamDescriptor" 
+--     in type ParameterContents. 
+-- 2.4: 
+--   - NOTE: This version introduces breaking changes! 
+--   - moved "children" in Parameter and Node out of 
+--     "contents" SET. 
+-- 2.3: 
+--   - Added size constraints for INTEGER values. 
+--   - Renamed EnumEntry to StringIntegerPair 
+--   - Renamed EnumCollection to StringIntegerCollection 
+--- Page 83 ---
+Ember+ protocol specification        Lawo GmbH 
+84 
+-- 2.2: 
+--   - Added new field "enumMap" to Parameter and types to describe 
+--     enum entries: EnumEntry and EnumCollection 
+-- 2.1: 
+--   - NOTE: This version introduces breaking changes! 
+--   - Replaced all APPLICATION tags for fields with CONTEXT-SPECIFIC tags 
+--     APPLICATION tags are only used for custom types now. 
+-- 2.0: 
+--   Initial Release 
+-- 
+ 
+ 
+EmberPlus-Glow DEFINITIONS EXPLICIT TAGS ::= BEGIN 
+ 
+ 
+-- ====================================================== 
+-- 
+-- Primitive Types 
+-- 
+-- ====================================================== 
+ 
+EmberString ::= UTF8String 
+Integer32 ::= INTEGER (-2147483648 .. 2147483647) 
+Integer64 ::= INTEGER (-9223372036854775808 .. 9223372036854775807) 
+ 
+ 
+-- this is the base oid for all RELATIVE-OID values defined in this document. 
+-- when using the RELATIVE-OID type, defining a base oid is required by ASN.1. 
+-- does not have any impact upon the DTD. 
+baseOid OBJECT IDENTIFIER ::= { iso(1) org(3) dod(6) internet(1) private(4) 
+enterprises(1) lsb(37411) lsb-mgmt(2) emberPlus(1) glow(1) glowVolatile(100) } 
+ 
+-- ====================================================== 
+-- 
+-- Template 
+-- 
+-- ====================================================== 
+ 
+Template ::= 
+ [APPLICATION 24] IMPLICIT 
+  SET { 
+   number  [0] Integer32, 
+   element [1] TemplateElement     OPTIONAL, 
+   description [2] EmberString         OPTIONAL, 
+ 
+ 
+QualifiedTemplate ::= 
+ [APPLICATION 25] IMPLICIT SET { 
+  path    [0] RELATIVE-OID, 
+  element  [1] TemplateElement               OPTIONAL, 
+  description [2] EmberString                   OPTIONAL 
+ } 
+ 
+TemplateElement ::= 
+ CHOICE { 
+  parameter  Parameter, 
+  node   Node, 
+  matrix   Matrix, 
+  function  Function, 
+ } 
+ 
+-- ====================================================== 
+--- Page 84 ---
+Ember+ protocol specification        Lawo GmbH 
+85 
+-- 
+-- Parameter 
+-- 
+-- ====================================================== 
+ 
+Parameter ::= 
+    [APPLICATION 1] IMPLICIT 
+        SEQUENCE { 
+            number   [0] Integer32, 
+            contents [1] ParameterContents OPTIONAL, 
+            children [2] ElementCollection OPTIONAL 
+        } 
+ 
+ 
+QualifiedParameter ::= 
+    [APPLICATION 9] IMPLICIT 
+        SEQUENCE { 
+            path     [0] RELATIVE-OID, 
+            contents [1] ParameterContents OPTIONAL, 
+            children [2] ElementCollection OPTIONAL 
+        } 
+ 
+ 
+ParameterContents ::= 
+    SET { 
+        identifier       [ 0] EmberString             OPTIONAL, 
+        description      [ 1] EmberString             OPTIONAL, 
+        value            [ 2] Value                   OPTIONAL, 
+        minimum          [ 3] MinMax                  OPTIONAL, 
+        maximum          [ 4] MinMax                  OPTIONAL, 
+        access           [ 5] ParameterAccess         OPTIONAL, 
+        format           [ 6] EmberString             OPTIONAL, 
+        enumeration      [ 7] EmberString             OPTIONAL, 
+        factor           [ 8] Integer32               OPTIONAL, 
+        isOnline         [ 9] BOOLEAN                 OPTIONAL, 
+        formula          [10] EmberString             OPTIONAL, 
+        step             [11] Integer32               OPTIONAL, 
+        default          [12] Value                   OPTIONAL, 
+        type             [13] ParameterType           OPTIONAL, 
+        streamIdentifier [14] Integer32               OPTIONAL, 
+        enumMap          [15] StringIntegerCollection OPTIONAL, 
+        streamDescriptor [16] StreamDescription       OPTIONAL, 
+        schemaIdentifiers[17] EmberString             OPTIONAL, 
+        templateReference[18] Relative OID OPTIONAL 
+    } 
+ 
+ 
+Value ::= 
+    CHOICE { 
+        integer Integer64, 
+        real    REAL, 
+        string  EmberString, 
+        boolean BOOLEAN, 
+        octets  OCTET STRING, 
+        null    NULL 
+    } 
+ 
+ 
+MinMax ::= 
+    CHOICE { 
+        integer Integer64, 
+        real    REAL, 
+        null    NULL 
+--- Page 85 ---
+Ember+ protocol specification        Lawo GmbH 
+86 
+    } 
+ 
+ 
+ParameterType ::= 
+    INTEGER { 
+        null    (0), 
+        integer (1), 
+        real    (2), 
+        string  (3), 
+        boolean (4), 
+        trigger (5), 
+        enum    (6), 
+        octets  (7) 
+    } 
+ 
+ 
+ParameterAccess ::= 
+    INTEGER { 
+        none      (0), 
+        read      (1), -- default 
+        write     (2), 
+        readWrite (3) 
+    } 
+ 
+ 
+StringIntegerPair ::= 
+    [APPLICATION 7] IMPLICIT 
+        SEQUENCE { 
+            entryString  [0] EmberString, 
+            entryInteger [1] Integer32 
+        } 
+ 
+ 
+StringIntegerCollection ::= 
+    [APPLICATION 8] IMPLICIT 
+        SEQUENCE OF [0] StringIntegerPair 
+ 
+ 
+StreamDescription ::= 
+    [APPLICATION 12] IMPLICIT 
+        SEQUENCE { 
+            format [0] StreamFormat, 
+            offset [1] Integer32  -- byte offset of the value in the streamed blob. 
+        } 
+ 
+ 
+-- type:       0=uint,  1=int,   2=float 
+-- size:       0=1byte, 1=2byte, 2=4byte, 3=8byte 
+-- endianness: 0=big,   1=little 
+StreamFormat ::= 
+    INTEGER { 
+        unsignedInt8                  ( 0), -- 00000 00 0 
+        unsignedInt16BigEndian        ( 2), -- 00000 01 0 
+        unsignedInt16LittleEndian     ( 3), -- 00000 01 1 
+        unsignedInt32BigEndian        ( 4), -- 00000 10 0 
+        unsignedInt32LittleEndian     ( 5), -- 00000 10 1 
+        unsignedInt64BigEndian        ( 6), -- 00000 11 0 
+        unsignedInt64LittleEndian     ( 7), -- 00000 11 1 
+        signedInt8                    ( 8), -- 00001 00 0 
+        signedInt16BigEndian          (10), -- 00001 01 0 
+        signedInt16LittleEndian       (11), -- 00001 01 1 
+        signedInt32BigEndian          (12), -- 00001 10 0 
+        signedInt32LittleEndian       (13), -- 00001 10 1 
+--- Page 86 ---
+Ember+ protocol specification        Lawo GmbH 
+87 
+        signedInt64BigEndian          (14), -- 00001 11 0 
+        signedInt64LittleEndian       (15), -- 00001 11 1 
+        ieeeFloat32BigEndian          (20), -- 00010 10 0 
+        ieeeFloat32LittleEndian       (21), -- 00010 10 1 
+        ieeeFloat64BigEndian          (22), -- 00010 11 0 
+        ieeeFloat64LittleEndian       (23)  -- 00010 11 1 
+    } 
+ 
+ 
+-- ====================================================== 
+-- 
+-- Command 
+-- 
+-- ====================================================== 
+ 
+Command ::= 
+    [APPLICATION 2] IMPLICIT 
+        SEQUENCE { 
+            number    [0] CommandType, 
+            options       CHOICE { 
+                dirFieldMask [1] FieldFlags -- only valid if number is 
+getDirectory(32) 
+                invocation   [2] Invocation -- only valid if number is invoke(33) 
+            } OPTIONAL 
+        } 
+ 
+ 
+CommandType ::= 
+    INTEGER { 
+        subscribe    (30), 
+        unsubscribe  (31), 
+        getDirectory (32), 
+        invoke       (33) 
+    } 
+ 
+ 
+FieldFlags ::= 
+    INTEGER { 
+        sparse            (-2), 
+        all               (-1), 
+        default           ( 0), -- same as "all" 
+        identifier        ( 1), 
+        description       ( 2), 
+        tree              ( 3), 
+        value             ( 4), 
+        connections       ( 5) 
+    } 
+ 
+ 
+-- ====================================================== 
+-- 
+-- Node 
+-- 
+-- ====================================================== 
+ 
+Node ::= 
+    [APPLICATION 3] IMPLICIT 
+        SEQUENCE { 
+            number   [0] Integer32, 
+            contents [1] NodeContents      OPTIONAL, 
+            children [2] ElementCollection OPTIONAL 
+        } 
+ 
+--- Page 87 ---
+Ember+ protocol specification        Lawo GmbH 
+88 
+ 
+QualifiedNode ::= 
+    [APPLICATION 10] IMPLICIT 
+        SEQUENCE { 
+            path     [0] RELATIVE-OID, 
+            contents [1] NodeContents      OPTIONAL, 
+            children [2] ElementCollection OPTIONAL 
+        } 
+ 
+ 
+NodeContents ::= 
+    SET { 
+        identifier       [0] EmberString  OPTIONAL, 
+        description      [1] EmberString  OPTIONAL, 
+        isRoot           [2] BOOLEAN      OPTIONAL, 
+        isOnline         [3] BOOLEAN      OPTIONAL,   -- default is true 
+        schemaIdentifiers[4] EmberString  OPTIONAL, 
+        templateReference[5] Relative OID OPTIONAL 
+    } 
+ 
+ 
+-- ====================================================== 
+-- 
+-- Matrix 
+-- 
+-- ====================================================== 
+ 
+Matrix ::= 
+    [APPLICATION 13] IMPLICIT 
+        SEQUENCE { 
+            number         [0] Integer32, 
+            contents       [1] MatrixContents       OPTIONAL, 
+            children       [2] ElementCollection    OPTIONAL, 
+            targets        [3] TargetCollection     OPTIONAL, 
+            sources        [4] SourceCollection     OPTIONAL, 
+            connections    [5] ConnectionCollection OPTIONAL 
+        } 
+ 
+ 
+MatrixContents ::= 
+    SET { 
+        identifier               [ 0] EmberString, 
+        description              [ 1] EmberString          OPTIONAL, 
+        type                     [ 2] MatrixType           OPTIONAL, 
+        addressingMode           [ 3] MatrixAddressingMode OPTIONAL, 
+        targetCount              [ 4] Integer32,                     -- linear: 
+matrix X size; nonLinear: number of targets 
+        sourceCount              [ 5] Integer32,                     -- linear: 
+matrix Y size; nonLinear: number of sources 
+        maximumTotalConnects     [ 6] Integer32            OPTIONAL, -- nToN: max 
+number of set connections 
+        maximumConnectsPerTarget [ 7] Integer32            OPTIONAL, -- nToN: max 
+number of sources connected to one target 
+        parametersLocation       [ 8] ParametersLocation   OPTIONAL, 
+        gainParameterNumber      [ 9] Integer32            OPTIONAL, -- nToN: number 
+of connection gain parameter 
+        labels                   [10] LabelCollection      OPTIONAL, 
+        schemaIdentifiers        [11] EmberString          OPTIONAL, 
+        templateReference        [12] Relative OID OPTIONAL 
+    } 
+ 
+-- Addressing scheme for node at MatrixContents.parametersLocation: 
+-- N 0001 targets.<targetNumber>: subtree containing parameters attached to target 
+--- Page 88 ---
+Ember+ protocol specification        Lawo GmbH 
+89 
+with <targetNumber> 
+-- N 0002 sources.<sourceNumber>: subtree containing parameters attached to source 
+with <targetNumber> 
+-- N 0003 connections.<targetNumber>.<sourceNumber>: : subtree containing parameters 
+attached to connection <targetNumber>/<sourceNumber> 
+ 
+ 
+MatrixType ::= 
+    INTEGER { 
+        oneToN   (0),  -- default 
+        oneToOne (1), 
+        nToN     (2) 
+    } 
+ 
+ 
+MatrixAddressingMode ::= 
+    INTEGER { 
+        linear    (0),  -- default 
+        nonLinear (1) 
+    } 
+ 
+ 
+ParametersLocation ::= 
+    CHOICE { 
+        basePath RELATIVE-OID, -- absolute path to node containing parameters for 
+targets, sources and connections 
+        inline   Integer32     -- subidentifier to node containing parameters for 
+targets, sources and connections 
+    } 
+ 
+ 
+LabelCollection ::= 
+    SEQUENCE OF [0] Label 
+ 
+ 
+Label ::= 
+    [APPLICATION 18] IMPLICIT 
+        SEQUENCE { 
+            basePath    [0] RELATIVE-OID, 
+            description [1] EmberString 
+        } 
+ 
+ 
+TargetCollection ::= 
+    SEQUENCE OF [0] Target 
+ 
+ 
+Target ::= 
+    [APPLICATION 14] IMPLICIT 
+        Signal 
+ 
+ 
+Signal ::= 
+    SEQUENCE { 
+        number  [0] Integer32 
+    } 
+ 
+ 
+SourceCollection ::= 
+    SEQUENCE OF [0] Source 
+ 
+ 
+Source ::= 
+--- Page 89 ---
+Ember+ protocol specification        Lawo GmbH 
+90 
+    [APPLICATION 15] IMPLICIT 
+        Signal 
+ 
+ 
+ConnectionCollection ::= 
+    SEQUENCE OF [0] Connection 
+ 
+ 
+Connection ::= 
+    [APPLICATION 16] IMPLICIT 
+        SEQUENCE { 
+            target         [0] Integer32, 
+            sources        [1] PackedNumbers         OPTIONAL, -- not present or 
+empty array means "none" 
+            operation      [2] ConnectionOperation   OPTIONAL, 
+            disposition    [3] ConnectionDisposition OPTIONAL 
+        } 
+ 
+-- Use case 1: Tally (Provider to consumer) 
+-- Connection: { target:1, sources:[5,2], operation:absolute, disposition:tally } 
+ 
+-- Use case 2: Take (Consumer to provider) 
+-- Connection: { target:1, sources:[4], operation:absolute|connect|disconnect } 
+ 
+-- Use case 3: TakeResponse (Provider to consumer) 
+-- Connection: { target:1, sources:[4], operation:absolute, 
+disposition:modified|pending|locked|... } 
+ 
+ 
+PackedNumbers ::= 
+    RELATIVE-OID 
+ 
+ 
+ConnectionOperation ::= 
+    INTEGER { 
+        absolute   (0),  -- default. sources contains absolute information 
+        connect    (1),  -- nToN only. sources contains sources to add to connection 
+        disconnect (2)   -- nToN only. sources contains sources to remove from 
+connection 
+    } 
+ 
+ 
+ConnectionDisposition ::= 
+    INTEGER { 
+        tally    (0),  -- default 
+        modified (1),  -- sources contains new current state 
+        pending  (2),  -- sources contains future state 
+        locked   (3)   -- error: target locked. sources contains current state 
+        -- more tbd. 
+    } 
+ 
+ 
+QualifiedMatrix ::= 
+    [APPLICATION 17] IMPLICIT 
+        SEQUENCE { 
+            path           [0] RELATIVE-OID, 
+            contents       [1] MatrixContents       OPTIONAL, 
+            children       [2] ElementCollection    OPTIONAL, 
+            targets        [3] TargetCollection     OPTIONAL, 
+            sources        [4] SourceCollection     OPTIONAL, 
+            connections    [5] ConnectionCollection OPTIONAL 
+        } 
+ 
+--- Page 90 ---
+Ember+ protocol specification        Lawo GmbH 
+91 
+ 
+-- ====================================================== 
+-- 
+-- Function 
+-- 
+-- ====================================================== 
+ 
+Function ::= 
+    [APPLICATION 19] IMPLICIT 
+        SEQUENCE { 
+            number      [0] Integer32, 
+            contents    [1] FunctionContents    OPTIONAL, 
+            children    [2] ElementCollection   OPTIONAL 
+        } 
+ 
+ 
+QualifiedFunction ::= 
+    [APPLICATION 20] IMPLICIT 
+        SEQUENCE { 
+            path        [0] RELATIVE-OID, 
+            contents    [1] FunctionContents    OPTIONAL, 
+            children    [2] ElementCollection   OPTIONAL 
+        } 
+ 
+ 
+FunctionContents ::= 
+    SET { 
+        identifier       [0] EmberString         OPTIONAL, 
+        description      [1] EmberString         OPTIONAL, 
+        arguments        [2] TupleDescription    OPTIONAL, 
+        result           [3] TupleDescription    OPTIONAL, 
+        templateReference[4] Relative OID        OPTIONAL, 
+    } 
+ 
+ 
+TupleDescription ::= 
+    SEQUENCE OF [0] TupleItemDescription 
+ 
+ 
+TupleItemDescription ::= 
+    [APPLICATION 21] IMPLICIT 
+        SEQUENCE { 
+            type     [0] ParameterType, 
+            name     [1] EmberString            OPTIONAL 
+        } 
+ 
+ 
+Invocation ::= 
+    [APPLICATION 22] IMPLICIT 
+        SEQUENCE { 
+            invocationId    [0] Integer32       OPTIONAL, 
+            arguments       [1] Tuple           OPTIONAL 
+        } 
+ 
+ 
+Tuple ::= 
+    SEQUENCE OF [0] Value 
+ 
+ 
+InvocationResult ::= 
+    [APPLICATION 23] IMPLICIT 
+        SEQUENCE { 
+            invocationId    [0] Integer32, 
+--- Page 91 ---
+Ember+ protocol specification        Lawo GmbH 
+92 
+            success         [1] BOOLEAN         OPTIONAL,            
+            result          [2] Tuple           OPTIONAL 
+        } 
+ 
+ 
+-- ====================================================== 
+-- 
+-- ElementCollection 
+-- 
+-- ====================================================== 
+ 
+ElementCollection ::= 
+    [APPLICATION 4] IMPLICIT 
+        SEQUENCE OF [0] Element 
+ 
+ 
+Element ::= 
+    CHOICE { 
+        parameter          Parameter, 
+        node               Node, 
+        command            Command, 
+        matrix             Matrix, 
+        function           Function, 
+        template           Template 
+    } 
+ 
+ 
+-- ====================================================== 
+-- 
+-- Streams 
+-- 
+-- ====================================================== 
+ 
+StreamEntry ::= 
+    [APPLICATION 5] IMPLICIT 
+        SEQUENCE { 
+            streamIdentifier [0] Integer32, 
+            streamValue      [1] Value 
+        } 
+ 
+ 
+StreamCollection ::= 
+    [APPLICATION 6] IMPLICIT 
+        SEQUENCE OF [0] StreamEntry 
+ 
+ 
+-- ====================================================== 
+-- 
+-- Root 
+-- 
+-- ====================================================== 
+ 
+Root ::= 
+   [APPLICATION 0] 
+       CHOICE { 
+           elements         RootElementCollection, 
+           streams          StreamCollection, 
+           invocationResult InvocationResult 
+       } 
+ 
+ 
+RootElementCollection ::= 
+    [APPLICATION 11] IMPLICIT 
+--- Page 92 ---
+Ember+ protocol specification        Lawo GmbH 
+93 
+        SEQUENCE OF [0] RootElement 
+ 
+ 
+RootElement ::= 
+    CHOICE { 
+        element            Element, 
+        qualifiedParameter QualifiedParameter, 
+        qualifiedNode      QualifiedNode, 
+        qualifiedMatrix    QualifiedMatrix, 
+        qualifiedFunction  QualififedFunction 
+        qualifiedTemplate  QualifiedTemplate 
+    } 
+ 
+ 
+END 
+ 
+ 
+  
+--- Page 93 ---
+Ember+ protocol specification        Lawo GmbH 
+94 
+Appendix 
+ 
+S101 CRC Table 
+0x0000, 0x1189, 0x2312, 0x329b, 0x4624, 0x57ad, 0x6536, 0x74bf, 
+0x8c48, 0x9dc1, 0xaf5a, 0xbed3, 0xca6c, 0xdbe5, 0xe97e, 0xf8f7, 
+0x1081, 0x0108, 0x3393, 0x221a, 0x56a5, 0x472c, 0x75b7, 0x643e, 
+0x9cc9, 0x8d40, 0xbfdb, 0xae52, 0xdaed, 0xcb64, 0xf9ff, 0xe876, 
+0x2102, 0x308b, 0x0210, 0x1399, 0x6726, 0x76af, 0x4434, 0x55bd, 
+0xad4a, 0xbcc3, 0x8e58, 0x9fd1, 0xeb6e, 0xfae7, 0xc87c, 0xd9f5, 
+0x3183, 0x200a, 0x1291, 0x0318, 0x77a7, 0x662e, 0x54b5, 0x453c, 
+0xbdcb, 0xac42, 0x9ed9, 0x8f50, 0xfbef, 0xea66, 0xd8fd, 0xc974, 
+0x4204, 0x538d, 0x6116, 0x709f, 0x0420, 0x15a9, 0x2732, 0x36bb, 
+0xce4c, 0xdfc5, 0xed5e, 0xfcd7, 0x8868, 0x99e1, 0xab7a, 0xbaf3, 
+0x5285, 0x430c, 0x7197, 0x601e, 0x14a1, 0x0528, 0x37b3, 0x263a, 
+0xdecd, 0xcf44, 0xfddf, 0xec56, 0x98e9, 0x8960, 0xbbfb, 0xaa72, 
+0x6306, 0x728f, 0x4014, 0x519d, 0x2522, 0x34ab, 0x0630, 0x17b9, 
+0xef4e, 0xfec7, 0xcc5c, 0xddd5, 0xa96a, 0xb8e3, 0x8a78, 0x9bf1, 
+0x7387, 0x620e, 0x5095, 0x411c, 0x35a3, 0x242a, 0x16b1, 0x0738, 
+0xffcf, 0xee46, 0xdcdd, 0xcd54, 0xb9eb, 0xa862, 0x9af9, 0x8b70, 
+0x8408, 0x9581, 0xa71a, 0xb693, 0xc22c, 0xd3a5, 0xe13e, 0xf0b7, 
+0x0840, 0x19c9, 0x2b52, 0x3adb, 0x4e64, 0x5fed, 0x6d76, 0x7cff, 
+0x9489, 0x8500, 0xb79b, 0xa612, 0xd2ad, 0xc324, 0xf1bf, 0xe036, 
+0x18c1, 0x0948, 0x3bd3, 0x2a5a, 0x5ee5, 0x4f6c, 0x7df7, 0x6c7e, 
+0xa50a, 0xb483, 0x8618, 0x9791, 0xe32e, 0xf2a7, 0xc03c, 0xd1b5, 
+0x2942, 0x38cb, 0x0a50, 0x1bd9, 0x6f66, 0x7eef, 0x4c74, 0x5dfd, 
+0xb58b, 0xa402, 0x9699, 0x8710, 0xf3af, 0xe226, 0xd0bd, 0xc134, 
+0x39c3, 0x284a, 0x1ad1, 0x0b58, 0x7fe7, 0x6e6e, 0x5cf5, 0x4d7c, 
+0xc60c, 0xd785, 0xe51e, 0xf497, 0x8028, 0x91a1, 0xa33a, 0xb2b3, 
+0x4a44, 0x5bcd, 0x6956, 0x78df, 0x0c60, 0x1de9, 0x2f72, 0x3efb, 
+0xd68d, 0xc704, 0xf59f, 0xe416, 0x90a9, 0x8120, 0xb3bb, 0xa232, 
+0x5ac5, 0x4b4c, 0x79d7, 0x685e, 0x1ce1, 0x0d68, 0x3ff3, 0x2e7a, 
+0xe70e, 0xf687, 0xc41c, 0xd595, 0xa12a, 0xb0a3, 0x8238, 0x93b1, 
+0x6b46, 0x7acf, 0x4854, 0x59dd, 0x2d62, 0x3ceb, 0x0e70, 0x1ff9, 
+0xf78f, 0xe606, 0xd49d, 0xc514, 0xb1ab, 0xa022, 0x92b9, 0x8330, 
+0x7bc7, 0x6a4e, 0x58d5, 0x495c, 0x3de3, 0x2c6a, 0x1ef1, 0x0f78 
+ 
